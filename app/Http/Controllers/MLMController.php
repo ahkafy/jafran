@@ -41,7 +41,8 @@ class MLMController extends Controller
     public function genealogy()
     {
         $user = Auth::user();
-        $tree = $this->mlmService->getGenealogyTree($user);
+        // Get direct referrals with their referrals loaded
+        $tree = $user->referrals()->with('referrals')->get();
 
         return view('mlm.genealogy', compact('tree'));
     }
