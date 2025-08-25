@@ -103,9 +103,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('wallet') ? 'active' : '' }}" href="{{ route('wallet') }}">
-                                <i class="fas fa-wallet"></i>
-                                <span class="d-lg-inline d-none">Wallet</span>
+                                                        <a class="nav-link {{ request()->routeIs('wallet*') ? 'active' : '' }}" href="{{ route('wallet') }}">
+                                <i class="fas fa-wallet me-2"></i>Wallet
                             </a>
                         </li>
                     </ul>
@@ -147,7 +146,7 @@
                                         <strong>${{ number_format(Auth::user()->commission_balance, 2) }}</strong>
                                     </div>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('wallet') }}">
+                                    <a class="dropdown-item" href="{{ route('wallet.index') }}">
                                         <i class="fas fa-wallet"></i> Manage Wallet
                                     </a>
                                 </div>
@@ -170,7 +169,7 @@
                                             <small class="fw-semibold text-success">${{ number_format(Auth::user()->commission_balance, 2) }}</small>
                                         </div>
                                     </div>
-                                    <a class="dropdown-item" href="{{ route('wallet') }}">
+                                    <a class="dropdown-item" href="{{ route('wallet.index') }}">
                                         <i class="fas fa-wallet"></i> Manage Wallet
                                     </a>
                                 </div>
@@ -203,7 +202,7 @@
                                     <a class="dropdown-item" href="{{ route('profile') }}">
                                         <i class="fas fa-user"></i> Profile Settings
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('wallet') }}">
+                                    <a class="dropdown-item" href="{{ route('wallet.index') }}">
                                         <i class="fas fa-wallet"></i> My Wallet
                                     </a>
                                     <a class="dropdown-item" href="{{ route('mlm.referral-link') }}">
@@ -283,7 +282,7 @@
                         <i class="fas fa-users d-block"></i>
                         <small>MLM</small>
                     </a>
-                    <a href="{{ route('wallet') }}" class="nav-link text-center {{ request()->routeIs('wallet') ? 'text-primary' : 'text-muted' }}">
+                    <a href="{{ route('wallet.index') }}" class="nav-link text-center {{ request()->routeIs('wallet*') ? 'text-primary' : 'text-muted' }}">
                         <i class="fas fa-wallet d-block"></i>
                         <small>Wallet</small>
                     </a>

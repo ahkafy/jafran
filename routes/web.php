@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\MLMController;
+use App\Http\Controllers\WalletController;
 
 
 Route::get('/', function () {
@@ -22,7 +23,23 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile', [DashboardController::class, 'updateProfile'])->name('profile.update');
 
     // Wallet routes
-    Route::get('/wallet', [DashboardController::class, 'wallet'])->name('wallet');
+    Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
+    Route::get('/wallet/add-funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
+    Route::post('/wallet/stripe-payment', [WalletController::class, 'processStripePayment'])->name('wallet.stripe-payment');
+    Route::post('/wallet/paypal-payment', [WalletController::class, 'processPayPalPayment'])->name('wallet.paypal-payment');
+    Route::post('/wallet/bank-transfer', [WalletController::class, 'submitBankTransfer'])->name('wallet.bank-transfer');
+
+    Route::get('/wallet/gift-cards', [WalletController::class, 'giftCards'])->name('wallet.gift-cards');
+    Route::post('/wallet/create-gift-card', [WalletController::class, 'createGiftCard'])->name('wallet.create-gift-card');
+    Route::post('/wallet/redeem-gift-card', [WalletController::class, 'redeemGiftCard'])->name('wallet.redeem-gift-card');
+
+    Route::get('/wallet/withdrawal', [WalletController::class, 'withdrawal'])->name('wallet.withdrawal');
+    Route::post('/wallet/withdrawal', [WalletController::class, 'submitWithdrawal'])->name('wallet.submit-withdrawal');
+
+    Route::get('/wallet/transactions', [WalletController::class, 'transactions'])->name('wallet.transactions');
+
+    // Wallet index alias for backwards compatibility
+    Route::get('/wallet/index', [WalletController::class, 'index'])->name('wallet.index');
 
     // Investment routes
     Route::prefix('investments')->name('investments.')->group(function () {

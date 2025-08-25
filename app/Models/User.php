@@ -111,6 +111,38 @@ class User extends Authenticatable
     }
 
     /**
+     * Get wallet transactions for the user.
+     */
+    public function walletTransactions()
+    {
+        return $this->hasMany(WalletTransaction::class);
+    }
+
+    /**
+     * Get gift cards created by the user.
+     */
+    public function createdGiftCards()
+    {
+        return $this->hasMany(GiftCard::class, 'created_by');
+    }
+
+    /**
+     * Get gift cards redeemed by the user.
+     */
+    public function redeemedGiftCards()
+    {
+        return $this->hasMany(GiftCard::class, 'redeemed_by');
+    }
+
+    /**
+     * Get withdrawal requests made by the user.
+     */
+    public function withdrawalRequests()
+    {
+        return $this->hasMany(WithdrawalRequest::class);
+    }
+
+    /**
      * Get all users in the upline (sponsors) up to 4 levels.
      */
     public function getUplineUsers($maxLevels = 4)
