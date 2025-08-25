@@ -14,7 +14,7 @@ class GeolocationTest extends TestCase
     {
         // Set environment to local
         config(['app.env' => 'local']);
-        
+
         $response = $this->get('/');
         $response->assertStatus(302); // Should redirect to /app, not blocked
     }
@@ -26,12 +26,12 @@ class GeolocationTest extends TestCase
     {
         // Set environment to production
         config(['app.env' => 'production']);
-        
+
         // Mock a request from Bangladesh (restricted country)
         $response = $this->withServerVariables([
             'REMOTE_ADDR' => '103.4.145.245' // Bangladesh IP
         ])->get('/');
-        
+
         // Should be redirected to blocked page (or fail geolocation check)
         // Note: This test might not work perfectly due to external API dependency
         $this->assertTrue(true); // Placeholder assertion
@@ -47,9 +47,9 @@ class GeolocationTest extends TestCase
             'blocked_country' => 'Bangladesh',
             'blocked_ip' => '103.4.145.245'
         ]);
-        
+
         $response = $this->get('/access-blocked');
-        
+
         $response->assertStatus(200);
         $response->assertSee('Access Restricted');
         $response->assertSee('Bangladesh');

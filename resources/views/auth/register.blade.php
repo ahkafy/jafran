@@ -5,7 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }} - Join MLM Investment System</div>
+                <div class="card-header text-center">
+                    <div class="mb-3">
+                        <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="MLM Investment" style="height: 48px; width: auto;">
+                    </div>
+                    {{ __('Register') }} - Join MLM Investment System
+                </div>
 
                 <div class="card-body">
                     @if($sponsor)

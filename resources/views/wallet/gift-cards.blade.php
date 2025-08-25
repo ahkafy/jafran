@@ -1,7 +1,4 @@
-@extends(                    <h1 class="mb-2 fw-bold">
-                        <i class="fas fa-gift text-primary"></i>
-                        Gift Cards
-                    </h1>outs.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container-fluid">

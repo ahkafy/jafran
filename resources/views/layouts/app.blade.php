@@ -29,12 +29,12 @@
     <div id="app">
         <!-- Mobile-First Navigation (Non-sticky) -->
         <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
+            <div class="container">
                 <!-- Brand -->
-                <a class="navbar-brand fw-bold" href="{{ url('/') }}">
-                    <i class="fas fa-chart-line"></i>
-                    <span class="d-none d-sm-inline">MLM Investment</span>
-                    <span class="d-sm-none">MLM</span>
+                <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}">
+                    <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="MLM Investment" class="me-2" style="height: 60px; width: auto;">
+
+
                 </a>
 
                 <!-- Mobile Toggle Button -->
@@ -235,22 +235,20 @@
 
         <!-- Main Content Area -->
         <main class="pt-3">
-            <!-- Global Alert Messages -->
-            @if(session('success'))
-                <div class="container-fluid mb-4">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="container">
+                <!-- Global Alert Messages -->
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                         <div class="d-flex align-items-center">
                             <i class="fas fa-check-circle me-2"></i>
                             <div class="flex-grow-1">{{ session('success') }}</div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
-                </div>
-            @endif
+                @endif
 
-            @if($errors->any())
-                <div class="container-fluid mb-4">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @if($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
                         <div class="d-flex align-items-start">
                             <i class="fas fa-exclamation-circle me-2 mt-1"></i>
                             <div class="flex-grow-1">
@@ -267,16 +265,16 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
-                </div>
-            @endif
+                @endif
 
-            @yield('content')
+                @yield('content')
+            </div>
         </main>
 
         <!-- Mobile Bottom Navigation (Optional) -->
         @auth
         <nav class="navbar navbar-light bg-white d-block d-lg-none border-top mt-4">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="d-flex justify-content-around w-100">
                     <a href="{{ route('dashboard') }}" class="nav-link text-center {{ request()->routeIs('dashboard') ? 'text-primary' : 'text-muted' }}">
                         <i class="fas fa-tachometer-alt d-block"></i>

@@ -29,7 +29,7 @@
                 <div class="col-lg-4">
                     <div class="card border-0 shadow-sm h-100 position-relative">
                         <!-- Unavailable Overlay -->
-                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
                              style="background: rgba(248, 249, 250, 0.95); z-index: 10; border-radius: 0.75rem;">
                             <div class="text-center p-4">
                                 <i class="fas fa-ban fa-3x text-danger mb-3"></i>
@@ -37,7 +37,7 @@
                                 <p class="text-muted mb-0">This payment method is currently not available in your region</p>
                             </div>
                         </div>
-                        
+
                         <div class="card-header bg-primary text-white text-center">
                             <i class="fab fa-cc-stripe fa-2x mb-2"></i>
                             <h5 class="mb-0">Credit/Debit Card</h5>
@@ -83,7 +83,7 @@
                 <div class="col-lg-4">
                     <div class="card border-0 shadow-sm h-100 position-relative">
                         <!-- Unavailable Overlay -->
-                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
                              style="background: rgba(248, 249, 250, 0.95); z-index: 10; border-radius: 0.75rem;">
                             <div class="text-center p-4">
                                 <i class="fas fa-ban fa-3x text-danger mb-3"></i>
@@ -91,7 +91,7 @@
                                 <p class="text-muted mb-0">This payment method is currently not available in your region</p>
                             </div>
                         </div>
-                        
+
                         <div class="card-header text-white text-center" style="background: #0070ba;">
                             <i class="fab fa-paypal fa-2x mb-2"></i>
                             <h5 class="mb-0">PayPal</h5>
