@@ -219,6 +219,14 @@
                                     </form>
                                 </div>
                             </li>
+
+                            <!-- Theme Toggle -->
+                            <li class="nav-item ms-2">
+                                <button id="themeToggle" class="btn btn-sm btn-outline-secondary d-flex align-items-center" title="Toggle Dark/Light Mode">
+                                    <i id="themeIcon" class="fas fa-moon"></i>
+                                    <span class="d-none d-md-inline ms-1">Dark</span>
+                                </button>
+                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -333,6 +341,12 @@
                 box-shadow: 0 4px 6px -1px rgba(255, 102, 0, 0.1);
                 border: 1px solid rgba(255, 102, 0, 0.1);
             }
+
+            .theme-dark .navbar-collapse {
+                background: rgba(30, 41, 59, 0.98) !important;
+                border-color: rgba(71, 85, 105, 0.6) !important;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+            }
         }
 
         .navbar-toggler {
@@ -341,6 +355,11 @@
             background: rgba(255, 102, 0, 0.1);
             border-radius: 0.5rem;
             color: #ff6600;
+        }
+
+        .theme-dark .navbar-toggler {
+            border-color: rgba(255, 102, 0, 0.5) !important;
+            background: rgba(255, 102, 0, 0.2) !important;
         }
 
         .navbar-toggler:focus {
@@ -361,10 +380,91 @@
             background-color: rgba(255, 102, 0, 0.1);
             color: #ff6600;
         }
+
+        /* Dark mode text overrides */
+        .theme-dark .text-muted {
+            color: #94a3b8 !important;
+        }
+
+        .theme-dark .text-primary {
+            color: #ff6600 !important;
+        }
+
+        /* Ensure proper text colors in both modes */
+        body:not(.theme-dark) .text-dark {
+            color: #2d2d2d !important;
+        }
+
+        body:not(.theme-dark) .text-muted {
+            color: #64748b !important;
+        }
+
+        /* Bottom mobile navigation dark mode */
+        .theme-dark .navbar-light {
+            background: rgba(30, 41, 59, 0.95) !important;
+            border-top: 1px solid rgba(71, 85, 105, 0.6) !important;
+        }
+
+        .theme-dark .navbar-light .nav-link {
+            color: #f1f5f9 !important;
+        }
+
+        .theme-dark .navbar-light .nav-link.text-primary {
+            color: #ff6600 !important;
+        }
+
+        .theme-dark .navbar-light .nav-link.text-muted {
+            color: #94a3b8 !important;
+        }
     </style>
 
     <!-- Bootstrap JS and Custom Scripts -->
     <script>
+        // Theme toggle functionality
+        (function() {
+            const toggle = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            const body = document.body;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('theme-dark');
+                    if (icon) {
+                        icon.className = 'fas fa-sun';
+                        const text = toggle.querySelector('span');
+                        if (text) text.textContent = 'Light';
+                    }
+                } else {
+                    body.classList.remove('theme-dark');
+                    if (icon) {
+                        icon.className = 'fas fa-moon';
+                        const text = toggle.querySelector('span');
+                        if (text) text.textContent = 'Dark';
+                    }
+                }
+            }
+
+            // Initialize theme on page load
+            const storedTheme = localStorage.getItem('jafran_theme');
+            if (storedTheme) {
+                applyTheme(storedTheme);
+            } else {
+                // Default to light mode
+                applyTheme('light');
+                localStorage.setItem('jafran_theme', 'light');
+            }
+
+            // Toggle theme on button click
+            if (toggle) {
+                toggle.addEventListener('click', function() {
+                    const currentTheme = body.classList.contains('theme-dark') ? 'dark' : 'light';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem('jafran_theme', newTheme);
+                    applyTheme(newTheme);
+                });
+            }
+        })();
+
         // Auto-hide alerts after 5 seconds
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {

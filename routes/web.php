@@ -5,8 +5,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\MLMController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\AccessController;
 
+// Access blocked route (no middleware)
+Route::get('/access-blocked', [AccessController::class, 'blocked'])->name('access.blocked');
 
+// Apply geolocation middleware to all routes except access blocked
+Route::middleware(['geolocation'])->group(function () {
 Route::get('/', function () {
     return redirect('/app');
 });
@@ -62,5 +67,6 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-// Public routes
-Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
+    // Public routes
+    Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
+});

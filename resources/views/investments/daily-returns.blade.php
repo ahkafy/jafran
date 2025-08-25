@@ -7,8 +7,8 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1 class="mb-2 fw-bold text-dark">
-                        <i class="fas fa-coins text-warning"></i>
+                                        <h1 class="mb-2 fw-bold">
+                        <i class="fas fa-calendar-day text-primary"></i>
                         Daily Returns
                     </h1>
                     <p class="text-muted mb-0">Track your daily earnings and investment performance</p>
@@ -35,7 +35,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Today's Returns</h6>
-                            <h3 class="mb-0 fw-bold text-dark">
+                            <h3 class="mb-0 fw-bold">
                                 ${{ number_format($dailyReturns->where('return_date', today())->sum('amount'), 2) }}
                             </h3>
                             <small class="text-success">
@@ -59,7 +59,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">This Week</h6>
-                            <h3 class="mb-0 fw-bold text-dark">
+                            <h3 class="mb-0 fw-bold">
                                 ${{ number_format($dailyReturns->where('return_date', '>=', now()->startOfWeek())->sum('amount'), 2) }}
                             </h3>
                             <small class="text-info">

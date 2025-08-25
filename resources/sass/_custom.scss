@@ -4,7 +4,8 @@
 body {
     font-family: $font-family-sans-serif;
     font-weight: $font-weight-normal;
-    background: #ffffff;
+    background: #ffffff !important;
+    color: #2d2d2d !important;
     min-height: 100vh;
 }
 
@@ -12,11 +13,12 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: #ffffff !important;
 }
 
 main {
     flex: 1;
-    background: #ffffff;
+    background: #ffffff !important;
     min-height: calc(100vh - 80px); // Reduced since navbar is not fixed
     padding-top: 1rem; // Reduced padding since no fixed navbar
 }
@@ -321,6 +323,81 @@ main {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+// Theme-safe text utilities
+.text-body {
+    color: #2d2d2d !important;
+}
+
+.text-body-emphasis {
+    color: #1a1a1a !important;
+}
+
+.text-body-secondary {
+    color: #64748b !important;
+}
+
+// Light mode specific overrides
+body:not(.theme-dark) {
+    .text-dark {
+        color: #2d2d2d !important;
+    }
+
+    .text-muted {
+        color: #64748b !important;
+    }
+
+    .text-secondary {
+        color: #6c757d !important;
+    }
+
+    .fw-semibold, .fw-bold {
+        color: #2d2d2d !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #2d2d2d !important;
+    }
+
+    .card {
+        background: #ffffff !important;
+        color: #2d2d2d !important;
+    }
+
+    .card-header {
+        color: #2d2d2d !important;
+    }
+
+    .table {
+        background: #ffffff !important;
+        color: #2d2d2d !important;
+
+        th {
+            color: #64748b !important;
+        }
+    }
+
+    .navbar {
+        background: #ffffff !important;
+
+        .navbar-brand,
+        .nav-link {
+            color: #2d2d2d !important;
+        }
+    }
+
+    .form-control {
+        background: #ffffff !important;
+        color: #2d2d2d !important;
+        border-color: #e2e8f0 !important;
+    }
+
+    .form-select {
+        background: #ffffff !important;
+        color: #2d2d2d !important;
+        border-color: #e2e8f0 !important;
+    }
+}
+
 // Mobile-First Responsive Design
 @media (max-width: 575.98px) {
     .container-fluid {
@@ -490,5 +567,322 @@ main {
     .table {
         background: rgba(51, 65, 85, 0.9);
         color: #f1f5f9;
+    }
+}
+
+// Manual dark theme toggle
+.theme-dark {
+    body {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+        color: #f1f5f9 !important;
+    }
+
+    #app {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+    }
+
+    main {
+        background: rgba(30, 41, 59, 0.95) !important;
+    }
+
+    .card {
+        background: rgba(51, 65, 85, 0.9) !important;
+        color: #f1f5f9 !important;
+        border-color: rgba(71, 85, 105, 0.6) !important;
+    }
+
+    .card-header {
+        background: rgba(71, 85, 105, 0.8) !important;
+        color: #f1f5f9 !important;
+        border-bottom-color: rgba(71, 85, 105, 0.6) !important;
+
+        &.bg-light {
+            background: rgba(71, 85, 105, 0.8) !important;
+            color: #f1f5f9 !important;
+        }
+
+        &.bg-primary {
+            background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%) !important;
+            color: white !important;
+        }
+
+        &.bg-success {
+            background: linear-gradient(135deg, $success 0%, lighten($success, 10%) 100%) !important;
+            color: white !important;
+        }
+
+        &.bg-info {
+            background: linear-gradient(135deg, $info 0%, lighten($info, 10%) 100%) !important;
+            color: white !important;
+        }
+
+        &.bg-warning {
+            background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+            color: white !important;
+        }
+    }
+
+    .navbar {
+        background: rgba(30, 41, 59, 0.95) !important;
+        border-bottom-color: rgba(71, 85, 105, 0.6) !important;
+
+        .navbar-brand,
+        .nav-link {
+            color: #f1f5f9 !important;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 102, 0, 0.2) !important;
+        }
+
+        .navbar-collapse {
+            background: rgba(30, 41, 59, 0.98) !important;
+            border-color: rgba(71, 85, 105, 0.6) !important;
+        }
+
+        .dropdown-menu {
+            background: rgba(30, 41, 59, 0.98) !important;
+            border-color: rgba(71, 85, 105, 0.6) !important;
+
+            .dropdown-item {
+                color: #f1f5f9 !important;
+
+                &:hover {
+                    background: rgba(255, 102, 0, 0.2) !important;
+                    color: #ff6600 !important;
+                }
+            }
+        }
+    }
+
+    .table {
+        background: rgba(51, 65, 85, 0.9) !important;
+        color: #f1f5f9 !important;
+
+        th {
+            color: #cbd5e1 !important;
+            border-bottom-color: rgba(71, 85, 105, 0.6) !important;
+            background: rgba(71, 85, 105, 0.5) !important;
+        }
+
+        td {
+            border-top-color: rgba(71, 85, 105, 0.3) !important;
+        }
+
+        &.table-hover tbody tr:hover {
+            background-color: rgba(255, 102, 0, 0.1) !important;
+        }
+
+        .table-light th {
+            background: rgba(71, 85, 105, 0.5) !important;
+            color: #cbd5e1 !important;
+        }
+    }
+
+    .form-control {
+        background: rgba(51, 65, 85, 0.8) !important;
+        color: #f1f5f9 !important;
+        border-color: rgba(71, 85, 105, 0.6) !important;
+
+        &:focus {
+            background: rgba(51, 65, 85, 0.9) !important;
+            border-color: #ff6600 !important;
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.25) !important;
+        }
+
+        &::placeholder {
+            color: #94a3b8 !important;
+        }
+    }
+
+    .form-select {
+        background: rgba(51, 65, 85, 0.8) !important;
+        color: #f1f5f9 !important;
+        border-color: rgba(71, 85, 105, 0.6) !important;
+
+        &:focus {
+            background: rgba(51, 65, 85, 0.9) !important;
+            border-color: #ff6600 !important;
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.25) !important;
+        }
+    }
+
+    .btn-outline-secondary {
+        border-color: rgba(100, 116, 139, 0.8) !important;
+        color: #cbd5e1 !important;
+
+        &:hover {
+            background: rgba(100, 116, 139, 0.2) !important;
+            border-color: #cbd5e1 !important;
+        }
+    }
+
+    .btn-outline-primary {
+        border-color: #ff6600 !important;
+        color: #ff6600 !important;
+
+        &:hover {
+            background: #ff6600 !important;
+            color: white !important;
+        }
+    }
+
+    .btn-outline-success {
+        border-color: $success !important;
+        color: $success !important;
+
+        &:hover {
+            background: $success !important;
+            color: white !important;
+        }
+    }
+
+    .btn-outline-info {
+        border-color: $info !important;
+        color: $info !important;
+
+        &:hover {
+            background: $info !important;
+            color: white !important;
+        }
+    }
+
+    .btn-outline-warning {
+        border-color: #ff8c00 !important;
+        color: #ff8c00 !important;
+
+        &:hover {
+            background: #ff8c00 !important;
+            color: white !important;
+        }
+    }
+
+    // Text color overrides for dark mode
+    .text-dark {
+        color: #f1f5f9 !important;
+    }
+
+    .text-muted {
+        color: #94a3b8 !important;
+    }
+
+    .text-secondary {
+        color: #cbd5e1 !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #f1f5f9 !important;
+    }
+
+    .fw-semibold, .fw-bold {
+        color: #f1f5f9 !important;
+    }
+
+    .alert {
+        background: rgba(51, 65, 85, 0.8) !important;
+        color: #f1f5f9 !important;
+        border-color: rgba(71, 85, 105, 0.6) !important;
+
+        &.alert-success {
+            background: rgba(16, 185, 129, 0.2) !important;
+            color: lighten($success, 20%) !important;
+            border-left-color: $success !important;
+        }
+
+        &.alert-info {
+            background: rgba(14, 165, 233, 0.2) !important;
+            color: lighten($info, 20%) !important;
+            border-left-color: $info !important;
+        }
+
+        &.alert-warning {
+            background: rgba(245, 158, 11, 0.2) !important;
+            color: lighten($warning, 20%) !important;
+            border-left-color: $warning !important;
+        }
+
+        &.alert-danger {
+            background: rgba(239, 68, 68, 0.2) !important;
+            color: lighten($danger, 20%) !important;
+            border-left-color: $danger !important;
+        }
+    }
+
+    .badge {
+        &.bg-success {
+            background: rgba(16, 185, 129, 0.8) !important;
+            color: white !important;
+        }
+        &.bg-primary {
+            background: rgba(59, 130, 246, 0.8) !important;
+            color: white !important;
+        }
+        &.bg-warning {
+            background: rgba(245, 158, 11, 0.8) !important;
+            color: white !important;
+        }
+        &.bg-info {
+            background: rgba(14, 165, 233, 0.8) !important;
+            color: white !important;
+        }
+        &.bg-secondary {
+            background: rgba(100, 116, 139, 0.8) !important;
+            color: white !important;
+        }
+    }
+
+    // Background utilities
+    .bg-light {
+        background: rgba(71, 85, 105, 0.8) !important;
+        color: #f1f5f9 !important;
+    }
+
+    .bg-white {
+        background: rgba(51, 65, 85, 0.9) !important;
+        color: #f1f5f9 !important;
+    }
+
+    // Border utilities
+    .border-0 {
+        border-color: rgba(71, 85, 105, 0.3) !important;
+    }
+
+    .border-bottom {
+        border-bottom-color: rgba(71, 85, 105, 0.6) !important;
+    }
+
+    .border-top {
+        border-top-color: rgba(71, 85, 105, 0.6) !important;
+    }
+
+    // Mobile navigation bottom bar
+    .navbar-light {
+        background: rgba(30, 41, 59, 0.95) !important;
+        border-top-color: rgba(71, 85, 105, 0.6) !important;
+
+        .nav-link {
+            color: #f1f5f9 !important;
+
+            &.text-primary {
+                color: #ff6600 !important;
+            }
+
+            &.text-muted {
+                color: #94a3b8 !important;
+            }
+        }
+    }
+
+    // Scrollbar for dark mode
+    ::-webkit-scrollbar-track {
+        background: rgba(51, 65, 85, 0.8) !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(100, 116, 139, 0.8) !important;
+
+        &:hover {
+            background: rgba(148, 163, 184, 0.8) !important;
+        }
     }
 }

@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends(                    <h1 class="mb-2 fw-bold">
+                        <i class="fas fa-minus-circle text-primary"></i>
+                        Withdraw Funds
+                    </h1>outs.app')
 
 @section('content')
 <div class="container-fluid">
@@ -47,9 +50,9 @@
                                                 <div class="input-group">
                                                     <span class="input-group-text">$</span>
                                                     <input type="number" class="form-control" name="amount"
-                                                           min="50" max="10000" step="0.01" required>
+                                                           min="2" max="10000" step="0.01" required>
                                                 </div>
-                                                <small class="text-muted">Min: $50, Max: $10,000</small>
+                                                <small class="text-muted">Min: $2, Max: $10,000</small>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="alert alert-info mb-0">
@@ -226,7 +229,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-0">
-                    <h5 class="mb-0 fw-semibold text-dark">
+                    <h5 class="mb-0 fw-semibold">
                         <i class="fas fa-history text-primary"></i>
                         Your Withdrawal Requests
                     </h5>

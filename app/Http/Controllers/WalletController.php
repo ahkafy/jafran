@@ -68,7 +68,7 @@ class WalletController extends Controller
     public function processStripePayment(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:10|max:10000',
+            'amount' => 'required|numeric|min:5|max:10000',
             'stripeToken' => 'required'
         ]);
 
@@ -118,7 +118,7 @@ class WalletController extends Controller
     public function processPayPalPayment(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:10|max:10000'
+            'amount' => 'required|numeric|min:5|max:10000'
         ]);
 
         if ($validator->fails()) {
@@ -167,7 +167,7 @@ class WalletController extends Controller
     public function submitBankTransfer(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:10|max:10000',
+            'amount' => 'required|numeric|min:20|max:10000',
             'transfer_reference' => 'required|string|max:100'
         ]);
 
@@ -227,7 +227,7 @@ class WalletController extends Controller
     public function createGiftCard(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:10|max:1000',
+            'amount' => 'required|numeric|min:5|max:5',
             'message' => 'nullable|string|max:200'
         ]);
 
@@ -370,7 +370,7 @@ class WalletController extends Controller
     public function submitWithdrawal(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:50|max:10000',
+            'amount' => 'required|numeric|min:2|max:10000',
             'bank_name' => 'required|string|max:100',
             'account_holder_name' => 'required|string|max:100',
             'account_number' => 'required|string|max:20',

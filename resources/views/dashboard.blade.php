@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1 class="mb-2 fw-bold text-dark">
+                    <h1 class="mb-2 fw-bold">
                         <i class="fas fa-tachometer-alt text-primary"></i>
                         Dashboard
                     </h1>
@@ -35,7 +35,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Wallet Balance</h6>
-                            <h3 class="mb-0 fw-bold text-dark">${{ number_format($stats['wallet_balance'], 2) }}</h3>
+                            <h3 class="mb-0 fw-bold">${{ number_format($stats['wallet_balance'], 2) }}</h3>
                             <small class="text-success">
                                 <i class="fas fa-arrow-up"></i>
                                 Available for investment
@@ -57,7 +57,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Commission Balance</h6>
-                            <h3 class="mb-0 fw-bold text-dark">${{ number_format($stats['commission_balance'], 2) }}</h3>
+                            <h3 class="mb-0 fw-bold">${{ number_format($stats['commission_balance'], 2) }}</h3>
                             <small class="text-success">
                                 <i class="fas fa-chart-line"></i>
                                 MLM earnings
@@ -79,7 +79,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Active Investments</h6>
-                            <h3 class="mb-0 fw-bold text-dark">{{ $stats['active_investments'] }}</h3>
+                            <h3 class="mb-0 fw-bold">{{ $stats['active_investments'] }}</h3>
                             <small class="text-info">
                                 <i class="fas fa-clock"></i>
                                 Earning daily returns
@@ -101,7 +101,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Total Team</h6>
-                            <h3 class="mb-0 fw-bold text-dark">{{ $stats['total_team'] }}</h3>
+                            <h3 class="mb-0 fw-bold">{{ $stats['total_team'] }}</h3>
                             <small class="text-warning">
                                 <i class="fas fa-users"></i>
                                 MLM network
@@ -124,7 +124,7 @@
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-header bg-light border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-semibold text-dark">
+                        <h5 class="mb-0 fw-semibold">
                             <i class="fas fa-chart-line text-primary"></i>
                             Recent Investments
                         </h5>
@@ -184,7 +184,7 @@
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-header bg-light border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-semibold text-dark">
+                        <h5 class="mb-0 fw-semibold">
                             <i class="fas fa-hand-holding-usd text-success"></i>
                             Recent Commissions
                         </h5>
@@ -244,7 +244,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-semibold text-dark">
+                        <h5 class="mb-0 fw-semibold">
                             <i class="fas fa-calendar-day text-info"></i>
                             Recent Daily Returns
                         </h5>
@@ -300,7 +300,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-0">
-                    <h5 class="mb-0 fw-semibold text-dark">
+                    <h5 class="mb-0 fw-semibold">
                         <i class="fas fa-bolt text-warning"></i>
                         Quick Actions
                     </h5>

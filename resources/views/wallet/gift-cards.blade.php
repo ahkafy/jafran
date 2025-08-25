@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends(                    <h1 class="mb-2 fw-bold">
+                        <i class="fas fa-gift text-primary"></i>
+                        Gift Cards
+                    </h1>outs.app')
 
 @section('content')
 <div class="container-fluid">
@@ -65,9 +68,9 @@
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control" name="amount"
-                                               min="10" max="1000" step="0.01" required>
+                                               value="5" min="5" max="5" step="0.01" required readonly>
                                     </div>
-                                    <small class="text-muted">Min: $10, Max: $1,000</small>
+                                    <small class="text-muted">Fixed amount: $5 USD only</small>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Message (Optional)</label>
@@ -97,7 +100,7 @@
                     <div class="card border-0 shadow-sm h-100">
                         <div class="card-header bg-light border-0">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0 fw-semibold text-dark">
+                                <h5 class="mb-0 fw-semibold">
                                     <i class="fas fa-list text-success"></i>
                                     Gift Cards You Created
                                 </h5>
@@ -183,7 +186,7 @@
                     <div class="card border-0 shadow-sm h-100">
                         <div class="card-header bg-light border-0">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0 fw-semibold text-dark">
+                                <h5 class="mb-0 fw-semibold">
                                     <i class="fas fa-history text-primary"></i>
                                     Gift Cards You Redeemed
                                 </h5>

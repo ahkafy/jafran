@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends(                    <h1 class="mb-2 fw-bold">
+                        <i class="fas fa-history text-primary"></i>
+                        Transaction History
+                    </h1>outs.app')
 
 @section('content')
 <div class="container-fluid">
@@ -122,7 +125,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-semibold text-dark">
+                        <h5 class="mb-0 fw-semibold">
                             <i class="fas fa-list text-info"></i>
                             All Transactions
                         </h5>

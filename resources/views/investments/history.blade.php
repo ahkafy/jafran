@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1 class="mb-2 fw-bold text-dark">
+                    <h1 class="mb-2 fw-bold">
                         <i class="fas fa-history text-primary"></i>
                         Investment History
                     </h1>
@@ -35,7 +35,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Total Investments</h6>
-                            <h3 class="mb-0 fw-bold text-dark">{{ $investments->total() }}</h3>
+                            <h3 class="mb-0 fw-bold">{{ $investments->total() }}</h3>
                             <small class="text-primary">
                                 <i class="fas fa-chart-bar"></i>
                                 All time
@@ -57,7 +57,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Total Invested</h6>
-                            <h3 class="mb-0 fw-bold text-dark">
+                            <h3 class="mb-0 fw-bold">
                                 ${{ number_format($investments->sum('amount'), 2) }}
                             </h3>
                             <small class="text-success">
@@ -81,7 +81,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Active Investments</h6>
-                            <h3 class="mb-0 fw-bold text-dark">
+                            <h3 class="mb-0 fw-bold">
                                 {{ $investments->where('status', 'active')->count() }}
                             </h3>
                             <small class="text-info">
@@ -105,7 +105,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Completed</h6>
-                            <h3 class="mb-0 fw-bold text-dark">
+                            <h3 class="mb-0 fw-bold">
                                 {{ $investments->where('status', 'completed')->count() }}
                             </h3>
                             <small class="text-warning">
@@ -130,7 +130,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-semibold text-dark">
+                        <h5 class="mb-0 fw-semibold">
                             <i class="fas fa-list text-primary"></i>
                             Investment History
                         </h5>

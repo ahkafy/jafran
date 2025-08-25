@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1 class="mb-2 fw-bold text-dark">
+                    <h1 class="mb-2 fw-bold">
                         <i class="fas fa-plus-circle text-primary"></i>
                         Add Funds
                     </h1>
@@ -27,7 +27,17 @@
             <div class="row g-4">
                 <!-- Stripe Payment -->
                 <div class="col-lg-4">
-                    <div class="card border-0 shadow-sm h-100">
+                    <div class="card border-0 shadow-sm h-100 position-relative">
+                        <!-- Unavailable Overlay -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+                             style="background: rgba(248, 249, 250, 0.95); z-index: 10; border-radius: 0.75rem;">
+                            <div class="text-center p-4">
+                                <i class="fas fa-ban fa-3x text-danger mb-3"></i>
+                                <h5 class="text-danger">Unavailable in Your Country</h5>
+                                <p class="text-muted mb-0">This payment method is currently not available in your region</p>
+                            </div>
+                        </div>
+                        
                         <div class="card-header bg-primary text-white text-center">
                             <i class="fab fa-cc-stripe fa-2x mb-2"></i>
                             <h5 class="mb-0">Credit/Debit Card</h5>
@@ -41,9 +51,9 @@
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control" name="amount"
-                                               min="10" max="10000" step="0.01" required>
+                                               min="5" max="10000" step="0.01" required disabled>
                                     </div>
-                                    <small class="text-muted">Min: $10, Max: $10,000</small>
+                                    <small class="text-muted">Min: $5, Max: $10,000</small>
                                 </div>
 
                                 <div class="mb-3">
@@ -54,7 +64,7 @@
                                     <div id="stripe-card-errors" role="alert" class="text-danger mt-2"></div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary w-100" id="stripe-submit">
+                                <button type="submit" class="btn btn-primary w-100" id="stripe-submit" disabled>
                                     <i class="fas fa-lock"></i> Pay with Card
                                 </button>
                             </form>
@@ -71,7 +81,17 @@
 
                 <!-- PayPal Payment -->
                 <div class="col-lg-4">
-                    <div class="card border-0 shadow-sm h-100">
+                    <div class="card border-0 shadow-sm h-100 position-relative">
+                        <!-- Unavailable Overlay -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+                             style="background: rgba(248, 249, 250, 0.95); z-index: 10; border-radius: 0.75rem;">
+                            <div class="text-center p-4">
+                                <i class="fas fa-ban fa-3x text-danger mb-3"></i>
+                                <h5 class="text-danger">Unavailable in Your Country</h5>
+                                <p class="text-muted mb-0">This payment method is currently not available in your region</p>
+                            </div>
+                        </div>
+                        
                         <div class="card-header text-white text-center" style="background: #0070ba;">
                             <i class="fab fa-paypal fa-2x mb-2"></i>
                             <h5 class="mb-0">PayPal</h5>
@@ -85,16 +105,16 @@
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control" name="amount"
-                                               min="10" max="10000" step="0.01" required>
+                                               min="5" max="10000" step="0.01" required disabled>
                                     </div>
-                                    <small class="text-muted">Min: $10, Max: $10,000</small>
+                                    <small class="text-muted">Min: $5, Max: $10,000</small>
                                 </div>
 
                                 <div class="text-center mb-3">
                                     <p class="text-muted">You will be redirected to PayPal to complete the payment</p>
                                 </div>
 
-                                <button type="submit" class="btn w-100" style="background: #0070ba; color: white;">
+                                <button type="submit" class="btn w-100" style="background: #0070ba; color: white;" disabled>
                                     <i class="fab fa-paypal"></i> Pay with PayPal
                                 </button>
                             </form>
@@ -125,9 +145,9 @@
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control" name="amount"
-                                               min="10" max="10000" step="0.01" required>
+                                               min="20" max="10000" step="0.01" required>
                                     </div>
-                                    <small class="text-muted">Min: $10, Max: $10,000</small>
+                                    <small class="text-muted">Min: $20, Max: $10,000</small>
                                 </div>
 
                                 <div class="mb-3">

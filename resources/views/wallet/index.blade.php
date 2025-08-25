@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1 class="mb-2 fw-bold text-dark">
+                    <h1 class="mb-2 fw-bold">
                         <i class="fas fa-wallet text-primary"></i>
                         My Wallet
                     </h1>
@@ -95,7 +95,7 @@
                     <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
                         <i class="fas fa-plus fa-lg text-primary"></i>
                     </div>
-                    <h6 class="mb-1 fw-semibold text-dark">Add Funds</h6>
+                    <h6 class="mb-1 fw-semibold">Add Funds</h6>
                     <small class="text-muted">Stripe, PayPal, Bank Transfer</small>
                 </div>
             </a>
@@ -107,7 +107,7 @@
                     <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
                         <i class="fas fa-minus fa-lg text-warning"></i>
                     </div>
-                    <h6 class="mb-1 fw-semibold text-dark">Withdraw Funds</h6>
+                    <h6 class="mb-1 fw-semibold">Withdraw Funds</h6>
                     <small class="text-muted">EFT to Bank Account</small>
                 </div>
             </a>
@@ -119,7 +119,7 @@
                     <div class="bg-success bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
                         <i class="fas fa-gift fa-lg text-success"></i>
                     </div>
-                    <h6 class="mb-1 fw-semibold text-dark">Gift Cards</h6>
+                    <h6 class="mb-1 fw-semibold">Gift Cards</h6>
                     <small class="text-muted">Create & Redeem</small>
                 </div>
             </a>
@@ -131,7 +131,7 @@
                     <div class="bg-info bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
                         <i class="fas fa-history fa-lg text-info"></i>
                     </div>
-                    <h6 class="mb-1 fw-semibold text-dark">Transaction History</h6>
+                    <h6 class="mb-1 fw-semibold">Transaction History</h6>
                     <small class="text-muted">View all transactions</small>
                 </div>
             </a>
@@ -144,7 +144,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-semibold text-dark">
+                        <h5 class="mb-0 fw-semibold">
                             <i class="fas fa-list text-primary"></i>
                             Recent Transactions
                         </h5>
@@ -200,7 +200,7 @@
             <!-- Gift Card Redeem -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-light border-0">
-                    <h6 class="mb-0 fw-semibold text-dark">
+                    <h6 class="mb-0 fw-semibold">
                         <i class="fas fa-gift text-success"></i>
                         Redeem Gift Card
                     </h6>
@@ -246,7 +246,7 @@
             @if($createdGiftCards->count() > 0)
             <div class="card border-0 shadow-sm mt-4">
                 <div class="card-header bg-light border-0">
-                    <h6 class="mb-0 fw-semibold text-dark">
+                    <h6 class="mb-0 fw-semibold">
                         <i class="fas fa-gift text-primary"></i>
                         Recent Gift Cards
                     </h6>

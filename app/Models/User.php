@@ -87,6 +87,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Alias for referrals for compatibility.
+     */
+    public function children()
+    {
+        return $this->referrals();
+    }
+
+    /**
      * Get all investments made by the user.
      */
     public function investments()
