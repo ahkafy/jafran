@@ -65,20 +65,20 @@ class RankingService
     public function updateUserRank(User $user)
     {
         $newRank = $this->calculateUserRank($user);
-        
+
         if ($user->rank !== $newRank) {
             $oldRank = $user->rank;
             $user->update([
                 'rank' => $newRank,
                 'rank_achieved_at' => now()
             ]);
-            
+
             // Log rank advancement
             \Log::info("User {$user->id} ({$user->name}) ranked up from {$oldRank} to {$newRank}");
-            
+
             return true; // Rank changed
         }
-        
+
         return false; // No rank change
     }
 
@@ -95,23 +95,23 @@ class RankingService
         if ($this->qualifiesForSeniorTrainer($user)) {
             return 'Senior Trainer';
         }
-        
+
         if ($this->qualifiesForTrainer($user)) {
             return 'Trainer';
         }
-        
+
         if ($this->qualifiesForLeader($user)) {
             return 'Leader';
         }
-        
+
         if ($this->qualifiesForCounsellor($user)) {
             return 'Counsellor';
         }
-        
+
         if ($this->qualifiesForMember($user)) {
             return 'Member';
         }
-        
+
         return 'Guest';
     }
 
@@ -204,7 +204,7 @@ class RankingService
         }
 
         $directReferrals = $user->referrals;
-        
+
         foreach ($directReferrals as $referral) {
             if (!$teamMembers->contains('id', $referral->id)) {
                 $teamMembers->push($referral);
@@ -254,11 +254,11 @@ class RankingService
         $currentRank = $user->rank;
         $ranks = array_keys(self::RANKS);
         $currentIndex = array_search($currentRank, $ranks);
-        
+
         if ($currentIndex !== false && $currentIndex < count($ranks) - 1) {
             return $ranks[$currentIndex + 1];
         }
-        
+
         return null; // Already at highest rank
     }
 
@@ -268,14 +268,14 @@ class RankingService
     public function getRankProgress(User $user)
     {
         $nextRank = $this->getNextRank($user);
-        
+
         if (!$nextRank) {
             return ['progress' => 100, 'next_rank' => null, 'requirements_met' => []];
         }
 
         $progress = [];
         $requirements = self::RANKS[$nextRank];
-        
+
         // Check investment requirement
         if (isset($requirements['min_investment'])) {
             $progress['investment'] = [
@@ -300,7 +300,7 @@ class RankingService
             if (isset($requirements[$req])) {
                 $rankName = ucfirst(str_replace('min_', '', $req));
                 $rankName = rtrim($rankName, 's'); // Remove 's' from plural
-                
+
                 $count = $this->countRankInTeam($user, $rankName);
                 $progress[str_replace('min_', '', $req)] = [
                     'current' => $count,

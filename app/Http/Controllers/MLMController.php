@@ -41,13 +41,13 @@ class MLMController extends Controller
     public function genealogy()
     {
         $user = Auth::user();
-        
+
         // Update current user's rank
         $user->updateRank();
-        
+
         // Get direct referrals with their referrals loaded
         $tree = $user->referrals()->with('referrals')->get();
-        
+
         // Update ranks for all users in the tree
         foreach ($tree as $level1User) {
             $level1User->updateRank();

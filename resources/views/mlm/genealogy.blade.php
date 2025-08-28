@@ -185,8 +185,8 @@
                                 @if(isset($tree))
                                     @php
                                         $membersCount = $tree->where('rank', '!=', 'Guest')->where('rank', '!=', null)->count();
-                                        $level2Members = $tree->sum(function($user) { 
-                                            return $user->referrals->where('rank', '!=', 'Guest')->where('rank', '!=', null)->count(); 
+                                        $level2Members = $tree->sum(function($user) {
+                                            return $user->referrals->where('rank', '!=', 'Guest')->where('rank', '!=', null)->count();
                                         });
                                     @endphp
                                     {{ $membersCount + $level2Members }}
@@ -243,7 +243,7 @@
                         $rankCounts = $allUsers->groupBy('rank')->map->count();
                         $totalUsers = $allUsers->count();
                     @endphp
-                    
+
                     <div class="row">
                         @foreach(['Guest', 'Member', 'Counsellor', 'Leader', 'Trainer', 'Senior Trainer'] as $rank)
                             @php
@@ -251,7 +251,7 @@
                                 $percentage = $totalUsers > 0 ? round(($count / $totalUsers) * 100, 1) : 0;
                                 $colors = [
                                     'Guest' => 'secondary',
-                                    'Member' => 'success', 
+                                    'Member' => 'success',
                                     'Counsellor' => 'info',
                                     'Leader' => 'warning',
                                     'Trainer' => 'danger',

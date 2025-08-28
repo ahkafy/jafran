@@ -28,9 +28,9 @@ class UpdateUserRanks extends Command
     public function handle()
     {
         $rankingService = new RankingService();
-        
+
         $userId = $this->option('user');
-        
+
         if ($userId) {
             // Update specific user
             $user = User::find($userId);
@@ -38,9 +38,9 @@ class UpdateUserRanks extends Command
                 $this->error("User with ID {$userId} not found.");
                 return 1;
             }
-            
+
             $rankChanged = $rankingService->updateUserRank($user);
-            
+
             if ($rankChanged) {
                 $this->info("User {$user->name} (ID: {$user->id}) rank updated to: {$user->rank}");
             } else {
@@ -49,23 +49,23 @@ class UpdateUserRanks extends Command
         } else {
             // Update all users
             $this->info('Starting to update ranks for all users...');
-            
+
             $users = User::all();
             $updated = 0;
             $progressBar = $this->output->createProgressBar($users->count());
-            
+
             foreach ($users as $user) {
                 if ($rankingService->updateUserRank($user)) {
                     $updated++;
                 }
                 $progressBar->advance();
             }
-            
+
             $progressBar->finish();
             $this->newLine();
             $this->info("Rank update completed. {$updated} users had their ranks updated.");
         }
-        
+
         return 0;
     }
 }

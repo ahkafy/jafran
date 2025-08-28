@@ -162,7 +162,7 @@
                                             <small class="text-muted">{{ $req['current'] }}/{{ $req['required'] }}</small>
                                         </div>
                                         <div class="progress" style="height: 6px;">
-                                            <div class="progress-bar bg-{{ $req['met'] ? 'success' : 'warning' }}" 
+                                            <div class="progress-bar bg-{{ $req['met'] ? 'success' : 'warning' }}"
                                                  style="width: {{ min(100, ($req['current'] / $req['required']) * 100) }}%"></div>
                                         </div>
                                     </div>

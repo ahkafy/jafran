@@ -231,8 +231,8 @@ class User extends Authenticatable
     {
         $rankInfo = $this->getRankInfo();
         return '<span class="badge bg-' . $rankInfo['color'] . '">
-                    <i class="fas fa-' . $rankInfo['icon'] . ' me-1"></i>' . 
-                    $rankInfo['name'] . 
+                    <i class="fas fa-' . $rankInfo['icon'] . ' me-1"></i>' .
+                    $rankInfo['name'] .
                 '</span>';
     }
 
@@ -243,8 +243,8 @@ class User extends Authenticatable
     {
         $rankInfo = $this->getRankInfo();
         return '<span class="badge bg-' . $rankInfo['color'] . ' genealogy-rank-badge">
-                    <i class="fas fa-' . $rankInfo['icon'] . ' me-1"></i>' . 
-                    $rankInfo['name'] . 
+                    <i class="fas fa-' . $rankInfo['icon'] . ' me-1"></i>' .
+                    $rankInfo['name'] .
                 '</span>';
     }
 
