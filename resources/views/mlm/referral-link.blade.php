@@ -112,7 +112,8 @@
                                         ['level' => 1, 'name' => 'Direct Referrals', 'rate' => 10, 'color' => 'success', 'icon' => 'user-check'],
                                         ['level' => 2, 'name' => 'Level 2', 'rate' => 4, 'color' => 'info', 'icon' => 'users'],
                                         ['level' => 3, 'name' => 'Level 3', 'rate' => 3, 'color' => 'warning', 'icon' => 'sitemap'],
-                                        ['level' => 4, 'name' => 'Level 4', 'rate' => 2, 'color' => 'danger', 'icon' => 'network-wired']
+                                        ['level' => 4, 'name' => 'Level 4', 'rate' => 2, 'color' => 'danger', 'icon' => 'network-wired'],
+                                        ['level' => 5, 'name' => 'Level 5', 'rate' => 2, 'color' => 'dark', 'icon' => 'project-diagram']
                                     ];
                                 @endphp
 
@@ -157,6 +158,10 @@
                                             <li class="mb-2">
                                                 <i class="fas fa-check text-success me-2"></i>
                                                 <strong>Level 4 invests:</strong> You earn 2%
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-check text-success me-2"></i>
+                                                <strong>Level 5 invests:</strong> You earn 2%
                                             </li>
                                         </ul>
                                     </div>

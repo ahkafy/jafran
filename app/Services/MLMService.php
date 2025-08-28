@@ -158,7 +158,7 @@ class MLMService
 
         // Get team investments by level
         $teamInvestments = [];
-        for ($level = 1; $level <= 4; $level++) {
+        for ($level = 1; $level <= 5; $level++) {
             $teamInvestments[$level] = $this->getTeamInvestmentsByLevel($user, $level);
         }
 

@@ -71,7 +71,7 @@
                 <div class="card-footer bg-white bg-opacity-25 border-0">
                     <small class="text-white">
                         <i class="fas fa-layer-group"></i>
-                        4 levels deep
+                        5 levels deep
                     </small>
                 </div>
             </div>
@@ -134,18 +134,18 @@
                             <i class="fas fa-layer-group text-primary"></i>
                             Team Investments by Generation
                         </h5>
-                        <span class="badge bg-primary">4 Levels</span>
+                        <span class="badge bg-primary">5 Levels</span>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
                         @php
-                            $levelColors = ['success', 'info', 'warning', 'danger'];
-                            $levelNames = ['Direct Team', 'Level 2', 'Level 3', 'Level 4'];
-                            $commissionRates = [10, 4, 3, 2];
+                            $levelColors = ['success', 'info', 'warning', 'danger', 'dark'];
+                            $levelNames = ['Direct Team', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
+                            $commissionRates = [10, 4, 3, 2, 2];
                         @endphp
 
-                        @for($level = 1; $level <= 4; $level++)
+                        @for($level = 1; $level <= 5; $level++)
                         <div class="col-lg-3 col-md-6">
                             <div class="text-center p-3 border border-{{ $levelColors[$level-1] }} rounded-3 h-100">
                                 <div class="mb-3">

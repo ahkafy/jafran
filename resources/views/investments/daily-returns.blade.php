@@ -36,7 +36,7 @@
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Today's Returns</h6>
                             <h3 class="mb-0 fw-bold">
-                                ${{ number_format($dailyReturns->where('return_date', today())->sum('amount'), 2) }}
+                                ${{ number_format($dailyReturns->where('return_date', today())->where('status', 'processed')->sum('amount'), 2) }}
                             </h3>
                             <small class="text-success">
                                 <i class="fas fa-calendar-day"></i>
@@ -60,7 +60,7 @@
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">This Week</h6>
                             <h3 class="mb-0 fw-bold">
-                                ${{ number_format($dailyReturns->where('return_date', '>=', now()->startOfWeek())->sum('amount'), 2) }}
+                                ${{ number_format($dailyReturns->where('return_date', '>=', now()->startOfWeek())->where('status', 'processed')->sum('amount'), 2) }}
                             </h3>
                             <small class="text-info">
                                 <i class="fas fa-calendar-week"></i>
@@ -84,7 +84,7 @@
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">This Month</h6>
                             <h3 class="mb-0 fw-bold text-dark">
-                                ${{ number_format($dailyReturns->where('return_date', '>=', now()->startOfMonth())->sum('amount'), 2) }}
+                                ${{ number_format($dailyReturns->where('return_date', '>=', now()->startOfMonth())->where('status', 'processed')->sum('amount'), 2) }}
                             </h3>
                             <small class="text-primary">
                                 <i class="fas fa-calendar-alt"></i>
@@ -108,7 +108,7 @@
                         <div>
                             <h6 class="text-muted mb-1 fw-semibold">Total Returns</h6>
                             <h3 class="mb-0 fw-bold text-dark">
-                                ${{ number_format($dailyReturns->sum('amount'), 2) }}
+                                ${{ number_format($dailyReturns->where('status', 'processed')->sum('amount'), 2) }}
                             </h3>
                             <small class="text-warning">
                                 <i class="fas fa-coins"></i>
@@ -248,8 +248,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-{{ $return->status == 'paid' ? 'success' : 'warning' }}">
-                                                <i class="fas fa-{{ $return->status == 'paid' ? 'check' : 'clock' }}"></i>
+                                            <span class="badge bg-{{ $return->status == 'processed' ? 'success' : 'warning' }}">
+                                                <i class="fas fa-{{ $return->status == 'processed' ? 'check' : 'clock' }}"></i>
                                                 {{ ucfirst($return->status) }}
                                             </span>
                                         </td>
@@ -283,11 +283,11 @@
                                     <div class="d-flex justify-content-md-end gap-3">
                                         <div class="text-center">
                                             <small class="text-muted d-block">This Page Total</small>
-                                            <strong class="text-success">${{ number_format($dailyReturns->sum('amount'), 2) }}</strong>
+                                            <strong class="text-success">${{ number_format($dailyReturns->where('status', 'processed')->sum('amount'), 2) }}</strong>
                                         </div>
                                         <div class="text-center">
                                             <small class="text-muted d-block">Grand Total</small>
-                                            <strong class="text-primary">${{ number_format($dailyReturns->sum('amount'), 2) }}</strong>
+                                            <strong class="text-primary">${{ number_format($dailyReturns->where('status', 'processed')->sum('amount'), 2) }}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -330,11 +330,11 @@
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col-md-3">
-                            <h4 class="text-success fw-bold">${{ number_format($dailyReturns->where('return_date', today())->sum('amount'), 2) }}</h4>
+                            <h4 class="text-success fw-bold">${{ number_format($dailyReturns->where('return_date', today())->where('status', 'processed')->sum('amount'), 2) }}</h4>
                             <small class="text-muted">Today's Returns</small>
                         </div>
                         <div class="col-md-3">
-                            <h4 class="text-info fw-bold">{{ $dailyReturns->where('return_date', today())->count() }}</h4>
+                            <h4 class="text-info fw-bold">{{ $dailyReturns->where('return_date', today())->where('status', 'processed')->count() }}</h4>
                             <small class="text-muted">Returns Today</small>
                         </div>
                         <div class="col-md-3">

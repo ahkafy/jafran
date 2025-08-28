@@ -103,23 +103,24 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        @for($level = 1; $level <= 4; $level++)
+                        @for($level = 1; $level <= 5; $level++)
                         @php
                             $levelMembers = $teamLevels[$level] ?? collect();
                             $levelInvestments = $stats['team_investments'][$level] ?? 0;
-                            $commissionRate = [1 => 10, 2 => 4, 3 => 3, 4 => 2][$level];
+                            $commissionRate = [1 => 10, 2 => 4, 3 => 3, 4 => 2, 5 => 2][$level];
                         @endphp
                         <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="card border-{{ ['', 'success', 'info', 'warning', 'danger'][$level] }} h-100">
-                                <div class="card-header bg-{{ ['', 'success', 'info', 'warning', 'danger'][$level] }} text-white text-center">
+                            <div class="card border-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }} h-100">
+                                <div class="card-header bg-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }} text-white text-center">
                                     <h6 class="mb-0">Level {{ $level }}</h6>
                                     <small>{{ $commissionRate }}% Commission</small>
                                 </div>
                                 <div class="card-body text-center">
                                     <div class="mb-3">
-                                        <i class="fas fa-users fa-2x text-{{ ['', 'success', 'info', 'warning', 'danger'][$level] }}"></i>
+                                                                                <i class="fas fa-users fa-2x text-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }}"></i>
                                     </div>
-                                    <h4 class="text-{{ ['', 'success', 'info', 'warning', 'danger'][$level] }}">{{ $levelMembers->count() }}</h4>
+                                    <div class="mb-3">
+                                        <h4 class="text-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }}">{{ $levelMembers->count() }}</h4>
                                     <p class="text-muted mb-2">Members</p>
 
                                     <hr>
@@ -149,7 +150,7 @@
     </div>
 
     <!-- Team Members by Level -->
-    @for($level = 1; $level <= 4; $level++)
+    @for($level = 1; $level <= 5; $level++)
     @php
         $levelMembers = $teamLevels[$level] ?? collect();
     @endphp
@@ -183,7 +184,7 @@
                                 @foreach($levelMembers as $member)
                                 @php
                                     $memberInvestments = $member->investments->sum('amount');
-                                    $commissionRate = [1 => 10, 2 => 4, 3 => 3, 4 => 2][$level];
+                                    $commissionRate = [1 => 10, 2 => 4, 3 => 3, 4 => 2, 5 => 2][$level];
                                     $commission = $memberInvestments * ($commissionRate / 100);
                                 @endphp
                                 <tr>

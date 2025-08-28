@@ -151,9 +151,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all users in the upline (sponsors) up to 4 levels.
+     * Get all users in the upline (sponsors) up to 5 levels.
      */
-    public function getUplineUsers($maxLevels = 4)
+    public function getUplineUsers($maxLevels = 5)
     {
         $upline = [];
         $currentUser = $this;

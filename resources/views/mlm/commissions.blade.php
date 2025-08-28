@@ -254,11 +254,12 @@
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <h6>Indirect Commissions (Levels 2-4):</h6>
+                            <h6>Indirect Commissions (Levels 2-5):</h6>
                             <ul class="small">
                                 <li><strong>Level 2:</strong> 4% commission</li>
                                 <li><strong>Level 3:</strong> 3% commission</li>
                                 <li><strong>Level 4:</strong> 2% commission</li>
+                                <li><strong>Level 5:</strong> 2% commission</li>
                             </ul>
                         </div>
                     </div>
