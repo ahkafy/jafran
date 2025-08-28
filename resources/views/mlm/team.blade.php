@@ -173,6 +173,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="border-0">Member</th>
+                                    <th class="border-0">Rank</th>
                                     <th class="border-0">Join Date</th>
                                     <th class="border-0">Investments</th>
                                     <th class="border-0">Team Size</th>
@@ -199,6 +200,12 @@
                                                 <small class="text-primary">{{ $member->referral_code }}</small>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-{{ $member->getRankInfo()['color'] }}">
+                                            <i class="fas fa-{{ $member->getRankInfo()['icon'] }} me-1"></i>
+                                            {{ $member->rank ?? 'Guest' }}
+                                        </span>
                                     </td>
                                     <td>
                                         <div>

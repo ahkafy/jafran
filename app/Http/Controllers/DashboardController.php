@@ -22,6 +22,10 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+        
+        // Update user's rank
+        $user->updateRank();
+        
         $stats = $this->mlmService->getUserMLMStats($user);
 
         // Recent activities

@@ -195,8 +195,8 @@ class MLMService
         return $total;
     }
 
-    /**
-     * Create investment with MLM processing
+        /**
+     * Create new investment and process commissions
      */
     public function createInvestment(User $user, $packageId, $amount)
     {
@@ -223,6 +223,9 @@ class MLMService
 
         // Process MLM commissions
         $this->processInvestment($investment);
+
+        // Update user's rank after investment
+        $user->updateRank();
 
         return $investment;
     }

@@ -41,7 +41,10 @@
                                         <div class="user-info">
                                             <h6 class="mb-1">{{ Auth::user()->name }}</h6>
                                             <small class="text-muted">{{ Auth::user()->referral_code }}</small>
-                                            <div class="badge badge-success">You</div>
+                                            <div class="mt-2">
+                                                {!! Auth::user()->getGenealogyRankBadge() !!}
+                                            </div>
+                                            <div class="badge badge-success mt-1">You</div>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +64,10 @@
                                                     <div class="user-info">
                                                         <h6 class="mb-1">{{ $level1User->name }}</h6>
                                                         <small class="text-muted">{{ $level1User->referral_code }}</small>
-                                                        <div class="badge badge-primary">Level 1</div>
+                                                        <div class="mt-2">
+                                                            {!! $level1User->getGenealogyRankBadge() !!}
+                                                        </div>
+                                                        <div class="badge badge-primary mt-1">Level 1</div>
                                                         <div class="mt-2">
                                                             <small class="text-success">
                                                                 <i class="fas fa-users"></i>
@@ -86,7 +92,10 @@
                                                                 <div class="user-info">
                                                                     <h6 class="mb-1">{{ $level2User->name }}</h6>
                                                                     <small class="text-muted">{{ $level2User->referral_code }}</small>
-                                                                    <div class="badge badge-info">Level 2</div>
+                                                                    <div class="mt-1">
+                                                                        {!! $level2User->getGenealogyRankBadge() !!}
+                                                                    </div>
+                                                                    <div class="badge badge-info mt-1">Level 2</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -171,17 +180,23 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            <h6 class="card-title mb-1">Network Depth</h6>
+                            <h6 class="card-title mb-1">Members+ in Network</h6>
                             <h3 class="mb-0">
-                                @if(isset($tree) && count($tree) > 0)
-                                    {{ $tree->max(function($user) { return $user->referrals->count() > 0 ? 2 : 1; }) }}
+                                @if(isset($tree))
+                                    @php
+                                        $membersCount = $tree->where('rank', '!=', 'Guest')->where('rank', '!=', null)->count();
+                                        $level2Members = $tree->sum(function($user) { 
+                                            return $user->referrals->where('rank', '!=', 'Guest')->where('rank', '!=', null)->count(); 
+                                        });
+                                    @endphp
+                                    {{ $membersCount + $level2Members }}
                                 @else
                                     0
                                 @endif
                             </h3>
                         </div>
                         <div class="ms-3">
-                            <i class="fas fa-layer-group fa-2x opacity-75"></i>
+                            <i class="fas fa-trophy fa-2x opacity-75"></i>
                         </div>
                     </div>
                 </div>
@@ -210,6 +225,55 @@
             </div>
         </div>
     </div>
+
+    <!-- Rank Distribution -->
+    @if(isset($tree) && count($tree) > 0)
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie text-primary"></i>
+                        Network Rank Distribution
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @php
+                        $allUsers = collect([$tree, $tree->pluck('referrals')->flatten()])->flatten();
+                        $rankCounts = $allUsers->groupBy('rank')->map->count();
+                        $totalUsers = $allUsers->count();
+                    @endphp
+                    
+                    <div class="row">
+                        @foreach(['Guest', 'Member', 'Counsellor', 'Leader', 'Trainer', 'Senior Trainer'] as $rank)
+                            @php
+                                $count = $rankCounts->get($rank, 0);
+                                $percentage = $totalUsers > 0 ? round(($count / $totalUsers) * 100, 1) : 0;
+                                $colors = [
+                                    'Guest' => 'secondary',
+                                    'Member' => 'success', 
+                                    'Counsellor' => 'info',
+                                    'Leader' => 'warning',
+                                    'Trainer' => 'danger',
+                                    'Senior Trainer' => 'dark'
+                                ];
+                            @endphp
+                            <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <span class="badge bg-{{ $colors[$rank] }} fs-6 p-2">{{ $rank }}</span>
+                                    </div>
+                                    <h4 class="mb-1">{{ $count }}</h4>
+                                    <small class="text-muted">{{ $percentage }}% of network</small>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
 
 <style>
@@ -291,6 +355,21 @@
 .badge {
     font-size: 0.7rem;
     padding: 0.25em 0.6em;
+}
+
+.genealogy-rank-badge {
+    font-size: 0.65rem !important;
+    padding: 0.2em 0.5em !important;
+    border-radius: 0.25rem !important;
+    font-weight: 600 !important;
+}
+
+.genealogy-rank-badge i {
+    font-size: 0.7em;
+}
+
+.user-info .badge {
+    margin: 0.1rem;
 }
 
 .bg-gradient-primary {

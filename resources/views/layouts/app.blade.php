@@ -185,6 +185,9 @@
                                         <div class="d-none d-lg-block">
                                             <div class="fw-semibold">{{ Auth::user()->name }}</div>
                                             <small class="text-muted">{{ Auth::user()->referral_code }}</small>
+                                            <div class="mt-1">
+                                                {!! Auth::user()->getRankBadge() !!}
+                                            </div>
                                         </div>
                                         <div class="d-lg-none">
                                             {{ Auth::user()->name }}
@@ -197,6 +200,9 @@
                                         <div class="fw-semibold">{{ Auth::user()->name }}</div>
                                         <small class="text-muted">{{ Auth::user()->email }}</small><br>
                                         <small class="text-primary">Code: {{ Auth::user()->referral_code }}</small>
+                                        <div class="mt-2">
+                                            {!! Auth::user()->getRankBadge() !!}
+                                        </div>
                                     </div>
 
                                     <a class="dropdown-item" href="{{ route('profile') }}">

@@ -29,6 +29,9 @@ class User extends Authenticatable
         'wallet_balance',
         'commission_balance',
         'status',
+        'rank',
+        'rank_achieved_at',
+        'total_investment',
     ];
 
     /**
@@ -53,6 +56,8 @@ class User extends Authenticatable
             'password' => 'hashed',
             'wallet_balance' => 'decimal:2',
             'commission_balance' => 'decimal:2',
+            'total_investment' => 'decimal:2',
+            'rank_achieved_at' => 'datetime',
         ];
     }
 
@@ -208,5 +213,56 @@ class User extends Authenticatable
     public function getTotalCommissions()
     {
         return $this->commissions()->where('status', 'paid')->sum('amount');
+    }
+
+    /**
+     * Get rank information with styling.
+     */
+    public function getRankInfo()
+    {
+        $rankingService = app(\App\Services\RankingService::class);
+        return $rankingService->getRankInfo($this->rank ?? 'Guest');
+    }
+
+    /**
+     * Get rank badge HTML.
+     */
+    public function getRankBadge()
+    {
+        $rankInfo = $this->getRankInfo();
+        return '<span class="badge bg-' . $rankInfo['color'] . '">
+                    <i class="fas fa-' . $rankInfo['icon'] . ' me-1"></i>' . 
+                    $rankInfo['name'] . 
+                '</span>';
+    }
+
+    /**
+     * Get rank badge HTML for genealogy tree (smaller).
+     */
+    public function getGenealogyRankBadge()
+    {
+        $rankInfo = $this->getRankInfo();
+        return '<span class="badge bg-' . $rankInfo['color'] . ' genealogy-rank-badge">
+                    <i class="fas fa-' . $rankInfo['icon'] . ' me-1"></i>' . 
+                    $rankInfo['name'] . 
+                '</span>';
+    }
+
+    /**
+     * Update user's rank based on current achievements.
+     */
+    public function updateRank()
+    {
+        $rankingService = app(\App\Services\RankingService::class);
+        return $rankingService->updateUserRank($this);
+    }
+
+    /**
+     * Get progress to next rank.
+     */
+    public function getRankProgress()
+    {
+        $rankingService = app(\App\Services\RankingService::class);
+        return $rankingService->getRankProgress($this);
     }
 }

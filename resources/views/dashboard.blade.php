@@ -118,6 +118,69 @@
         </div>
     </div>
 
+    <!-- Rank Information -->
+    <div class="row g-3 mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-light border-0">
+                    <h5 class="mb-0 fw-semibold">
+                        <i class="fas fa-trophy text-warning"></i>
+                        Your Rank Status
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <div class="bg-{{ auth()->user()->getRankInfo()['color'] }} bg-opacity-10 p-3 rounded-circle">
+                                        <i class="fas fa-{{ auth()->user()->getRankInfo()['icon'] }} fa-2x text-{{ auth()->user()->getRankInfo()['color'] }}"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="mb-1 fw-bold">{{ auth()->user()->rank ?? 'Guest' }}</h4>
+                                    <p class="text-muted mb-0">{{ auth()->user()->getRankInfo()['requirements'] }}</p>
+                                    @if(auth()->user()->rank_achieved_at)
+                                        <small class="text-success">
+                                            <i class="fas fa-calendar"></i>
+                                            Achieved on {{ auth()->user()->rank_achieved_at->format('M d, Y') }}
+                                        </small>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @php
+                                $progress = auth()->user()->getRankProgress();
+                            @endphp
+                            @if($progress['next_rank'])
+                                <h6 class="fw-semibold mb-3">Next Rank: {{ $progress['next_rank'] }}</h6>
+                                @foreach($progress['progress'] as $key => $req)
+                                    <div class="mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <small class="fw-semibold">{{ ucwords(str_replace('_', ' ', $key)) }}</small>
+                                            <small class="text-muted">{{ $req['current'] }}/{{ $req['required'] }}</small>
+                                        </div>
+                                        <div class="progress" style="height: 6px;">
+                                            <div class="progress-bar bg-{{ $req['met'] ? 'success' : 'warning' }}" 
+                                                 style="width: {{ min(100, ($req['current'] / $req['required']) * 100) }}%"></div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="text-center">
+                                    <i class="fas fa-crown fa-3x text-warning mb-3"></i>
+                                    <h6 class="fw-semibold">Maximum Rank Achieved!</h6>
+                                    <p class="text-muted mb-0">You've reached the highest rank in our system.</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-3 mb-4">
         <!-- Recent Investments -->
         <div class="col-lg-6">
