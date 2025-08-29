@@ -95,8 +95,9 @@ php artisan users:update-ranks
 # Update specific user rank  
 php artisan users:update-ranks --user=123
 
-# View current rankings
-php test_ranking_system.php
+# View current rankings through the admin dashboard or via Tinker
+php artisan tinker
+>>> User::with('referrals')->get();
 ```
 
 The ranking system is now fully functional and integrated into the MLM platform! 🎉

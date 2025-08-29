@@ -10,13 +10,17 @@ use App\Models\WalletTransaction;
 use App\Models\GiftCard;
 use App\Models\WithdrawalRequest;
 use App\Models\User;
+use App\Services\WalletService;
 use Exception;
 
 class WalletController extends Controller
 {
-    public function __construct()
+    protected $walletService;
+
+    public function __construct(WalletService $walletService)
     {
         $this->middleware('auth');
+        $this->walletService = $walletService;
     }
 
     /**
@@ -25,6 +29,9 @@ class WalletController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        // Get wallet summary with isolated balances
+        $walletSummary = $this->walletService->getWalletSummary($user);
 
         // Get recent transactions
         $transactions = $user->walletTransactions()
@@ -48,6 +55,7 @@ class WalletController extends Controller
 
         return view('wallet.index', compact(
             'user',
+            'walletSummary',
             'transactions',
             'pendingWithdrawals',
             'createdGiftCards'
@@ -93,13 +101,13 @@ class WalletController extends Controller
                 'amount' => $amount,
                 'payment_method' => WalletTransaction::PAYMENT_METHOD_STRIPE,
                 'payment_reference' => 'stripe_' . uniqid(),
-                'description' => 'Deposit via Stripe - $' . number_format($amount, 2),
+                'description' => 'Investment deposit via Stripe - $' . number_format($amount, 2),
                 'status' => WalletTransaction::STATUS_COMPLETED,
                 'processed_at' => now()
             ]);
 
-            // Update user balance
-            $user->increment('wallet_balance', $amount);
+            // Add to investment balance (isolated from withdrawable funds)
+            $this->walletService->addInvestmentFunds($user, $amount, 'Deposit via Stripe - $' . number_format($amount, 2));
 
             DB::commit();
 
@@ -142,13 +150,13 @@ class WalletController extends Controller
                 'amount' => $amount,
                 'payment_method' => WalletTransaction::PAYMENT_METHOD_PAYPAL,
                 'payment_reference' => 'paypal_' . uniqid(),
-                'description' => 'Deposit via PayPal - $' . number_format($amount, 2),
+                'description' => 'Investment deposit via PayPal - $' . number_format($amount, 2),
                 'status' => WalletTransaction::STATUS_COMPLETED,
                 'processed_at' => now()
             ]);
 
-            // Update user balance
-            $user->increment('wallet_balance', $amount);
+            // Add to investment balance (isolated from withdrawable funds)
+            $this->walletService->addInvestmentFunds($user, $amount, 'Deposit via PayPal - $' . number_format($amount, 2));
 
             DB::commit();
 
@@ -369,20 +377,39 @@ class WalletController extends Controller
      */
     public function submitWithdrawal(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        // Base validation rules
+        $rules = [
             'amount' => 'required|numeric|min:2|max:10000',
-            'bank_name' => 'required|string|max:100',
-            'account_holder_name' => 'required|string|max:100',
-            'account_number' => 'required|string|max:20',
-            'routing_number' => 'required|string|size:9',
-            'swift_code' => 'nullable|string|max:11',
-            'bank_address' => 'required|string|max:200',
-            'bank_city' => 'required|string|max:50',
-            'bank_state' => 'required|string|max:50',
-            'bank_zip_code' => 'required|string|max:10',
-            'account_type' => 'required|in:checking,savings',
+            'balance_type' => 'required|in:commission,returns,both',
+            'method' => 'required|in:bank,mbook',
             'notes' => 'nullable|string|max:500'
-        ]);
+        ];
+
+        // Add method-specific validation
+        if ($request->method === 'bank') {
+            $rules += [
+                'bank_name' => 'required|string|max:100',
+                'account_holder_name' => 'required|string|max:100',
+                'account_number' => 'required|string|max:20',
+                'routing_number' => 'required|string|size:9',
+                'swift_code' => 'nullable|string|max:11',
+                'bank_address' => 'nullable|string|max:200',
+                'bank_city' => 'nullable|string|max:50',
+                'bank_state' => 'nullable|string|max:50',
+                'bank_zip_code' => 'nullable|string|max:10',
+                'bank_country' => 'required|string|max:2',
+                'account_type' => 'required|in:checking,savings'
+            ];
+        } elseif ($request->method === 'mbook') {
+            $rules += [
+                'mbook_name' => 'required|string|max:100',
+                'mbook_country' => 'required|string|max:100',
+                'mbook_currency' => 'required|string|max:10',
+                'mbook_wallet_id' => 'required|string|max:50'
+            ];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
@@ -392,36 +419,33 @@ class WalletController extends Controller
             $user = Auth::user();
             $amount = $request->amount;
 
-            // Check if user has sufficient balance
-            $totalBalance = $user->wallet_balance + $user->commission_balance;
-            if ($totalBalance < $amount) {
-                return back()->with('error', 'Insufficient balance for withdrawal.');
+            // Check if user has sufficient withdrawable balance
+            if ($user->withdrawable_balance < $amount) {
+                return back()->with('error', 'Insufficient withdrawable balance. Only commission and investment returns can be withdrawn.');
             }
 
-            // Create withdrawal request
-            $withdrawalRequest = WithdrawalRequest::create([
-                'user_id' => $user->id,
-                'amount' => $amount,
-                'method' => WithdrawalRequest::METHOD_EFT,
-                'bank_name' => $request->bank_name,
-                'account_holder_name' => $request->account_holder_name,
-                'account_number' => $request->account_number,
-                'routing_number' => $request->routing_number,
-                'swift_code' => $request->swift_code,
-                'bank_address' => $request->bank_address,
-                'bank_city' => $request->bank_city,
-                'bank_state' => $request->bank_state,
-                'bank_zip_code' => $request->bank_zip_code,
-                'account_type' => $request->account_type,
-                'notes' => $request->notes,
-                'status' => WithdrawalRequest::STATUS_PENDING
-            ]);
+            // Calculate processing fee to show user
+            $bankCountry = $request->bank_country ?? 'US';
+            $feeInfo = WithdrawalRequest::calculateProcessingFee($amount, $request->method, $bankCountry);
+
+            // Create withdrawal request using WalletService
+            $withdrawalRequest = $this->walletService->createWithdrawalRequest($user, $request->all());
+
+            $nextProcessing = $user->getNextWithdrawalDate();
+
+            $successMessage = 'Withdrawal request submitted successfully! ' .
+                            'Request ID: #' . $withdrawalRequest->id .
+                            '. Gross Amount: $' . number_format($amount, 2) .
+                            '. Processing Fee: $' . number_format($feeInfo['fee_amount'], 2) . ' (' . $feeInfo['fee_rate'] . '%)' .
+                            '. Net Amount: $' . number_format($feeInfo['net_amount'], 2) .
+                            '. Processing date: ' . $nextProcessing['date']->format('M j, Y') .
+                            ' (' . $nextProcessing['days_until'] . ' days from now)';
 
             return redirect()->route('wallet.withdrawal')
-                ->with('success', 'Withdrawal request submitted successfully. Request ID: #' . $withdrawalRequest->id);
+                ->with('success', $successMessage);
 
         } catch (Exception $e) {
-            return back()->with('error', 'Failed to submit withdrawal request.');
+            return back()->with('error', $e->getMessage());
         }
     }
 

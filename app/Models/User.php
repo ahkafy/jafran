@@ -28,6 +28,11 @@ class User extends Authenticatable
         'address',
         'wallet_balance',
         'commission_balance',
+        'investment_balance',
+        'return_balance',
+        'withdrawable_balance',
+        'pending_withdrawal_amount',
+        'last_withdrawal_processed_at',
         'status',
         'rank',
         'rank_achieved_at',
@@ -56,8 +61,13 @@ class User extends Authenticatable
             'password' => 'hashed',
             'wallet_balance' => 'decimal:2',
             'commission_balance' => 'decimal:2',
+            'investment_balance' => 'decimal:2',
+            'return_balance' => 'decimal:2',
+            'withdrawable_balance' => 'decimal:2',
+            'pending_withdrawal_amount' => 'decimal:2',
             'total_investment' => 'decimal:2',
             'rank_achieved_at' => 'datetime',
+            'last_withdrawal_processed_at' => 'datetime',
         ];
     }
 
@@ -264,5 +274,55 @@ class User extends Authenticatable
     {
         $rankingService = app(\App\Services\RankingService::class);
         return $rankingService->getRankProgress($this);
+    }
+
+    /**
+     * Get total withdrawable balance (commission + returns)
+     */
+    public function getTotalWithdrawableBalance()
+    {
+        return $this->withdrawable_balance;
+    }
+
+    /**
+     * Get total available balance for investment
+     */
+    public function getInvestmentAvailableBalance()
+    {
+        return $this->investment_balance;
+    }
+
+    /**
+     * Check if user can make withdrawal
+     */
+    public function canMakeWithdrawal()
+    {
+        return $this->withdrawable_balance > 0;
+    }
+
+    /**
+     * Check if user can make investment
+     */
+    public function canMakeInvestment($amount = 0)
+    {
+        return $this->investment_balance >= $amount;
+    }
+
+    /**
+     * Get wallet summary for display
+     */
+    public function getWalletSummary()
+    {
+        $walletService = app(\App\Services\WalletService::class);
+        return $walletService->getWalletSummary($this);
+    }
+
+    /**
+     * Get next withdrawal processing date info
+     */
+    public function getNextWithdrawalDate()
+    {
+        $walletService = app(\App\Services\WalletService::class);
+        return $walletService->getNextProcessingDate();
     }
 }

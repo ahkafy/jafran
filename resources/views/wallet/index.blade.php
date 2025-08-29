@@ -29,18 +29,18 @@
 
     <!-- Balance Cards -->
     <div class="row g-3 mb-4">
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);">
                 <div class="card-body text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-1 opacity-75">Wallet Balance</h6>
-                            <h2 class="mb-0 fw-bold">${{ number_format($user->wallet_balance, 2) }}</h2>
-                            <small class="opacity-75">Available for investments</small>
+                            <h6 class="mb-1 opacity-75">Investment Balance</h6>
+                            <h2 class="mb-0 fw-bold">${{ number_format($walletSummary['investment_balance'], 2) }}</h2>
+                            <small class="opacity-75">For investments only</small>
                         </div>
                         <div class="text-end">
                             <div class="bg-white bg-opacity-20 p-3 rounded-circle">
-                                <i class="fas fa-wallet fa-lg"></i>
+                                <i class="fas fa-chart-line fa-lg"></i>
                             </div>
                         </div>
                     </div>
@@ -48,14 +48,14 @@
             </div>
         </div>
 
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
                 <div class="card-body text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="mb-1 opacity-75">Commission Balance</h6>
-                            <h2 class="mb-0 fw-bold">${{ number_format($user->commission_balance, 2) }}</h2>
-                            <small class="opacity-75">Earned from MLM</small>
+                            <h2 class="mb-0 fw-bold">${{ number_format($walletSummary['commission_balance'], 2) }}</h2>
+                            <small class="opacity-75">Network earnings</small>
                         </div>
                         <div class="text-end">
                             <div class="bg-white bg-opacity-20 p-3 rounded-circle">
@@ -67,18 +67,97 @@
             </div>
         </div>
 
-        <div class="col-lg-4 col-md-12">
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);">
+                <div class="card-body text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1 opacity-75">Return Balance</h6>
+                            <h2 class="mb-0 fw-bold">${{ number_format($walletSummary['return_balance'], 2) }}</h2>
+                            <small class="opacity-75">Investment returns</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="bg-white bg-opacity-20 p-3 rounded-circle">
+                                <i class="fas fa-piggy-bank fa-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%);">
                 <div class="card-body text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="mb-1 opacity-75">Total Balance</h6>
-                            <h2 class="mb-0 fw-bold">${{ number_format($user->wallet_balance + $user->commission_balance, 2) }}</h2>
-                            <small class="opacity-75">Combined funds</small>
+                            <h6 class="mb-1 opacity-75">Withdrawable Balance</h6>
+                            <h2 class="mb-0 fw-bold">${{ number_format($walletSummary['withdrawable_balance'], 2) }}</h2>
+                            <small class="opacity-75">Available for withdrawal</small>
                         </div>
                         <div class="text-end">
                             <div class="bg-white bg-opacity-20 p-3 rounded-circle">
-                                <i class="fas fa-coins fa-lg"></i>
+                                <i class="fas fa-hand-holding-usd fa-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Information Card -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title">
+                                <i class="fas fa-info-circle text-primary"></i>
+                                Wallet Isolation System
+                            </h5>
+                            <div class="alert alert-info mb-3">
+                                <strong>Important:</strong> Your wallet now uses an isolated balance system for better security and compliance.
+                            </div>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-chart-line text-warning me-2"></i>
+                                    <strong>Investment Balance:</strong> Added funds that must be used for investments
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-percentage text-success me-2"></i>
+                                    <strong>Commission Balance:</strong> Earnings from your network referrals
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-piggy-bank text-info me-2"></i>
+                                    <strong>Return Balance:</strong> Daily returns from your investments
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-hand-holding-usd text-purple me-2"></i>
+                                    <strong>Withdrawable Balance:</strong> Combined commission + returns (can be withdrawn)
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="bg-light p-3 rounded">
+                                <h6 class="mb-3">Next Withdrawal Processing</h6>
+                                <div class="text-center">
+                                    <div class="h4 text-primary mb-1">{{ $walletSummary['next_processing_date']['date']->format('M j, Y') }}</div>
+                                    <small class="text-muted">{{ $walletSummary['next_processing_date']['days_until'] }} days from now</small>
+                                </div>
+                                <hr>
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar-alt me-1"></i>
+                                    Withdrawals processed twice monthly: 1st & 16th
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                             </div>
                         </div>
                     </div>
