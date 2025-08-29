@@ -10,10 +10,10 @@
                         <i class="fas fa-hand-holding-usd text-primary"></i>
                         Commission History
                     </h2>
-                    <p class="text-muted mb-0">Track all your MLM commission earnings</p>
+                    <p class="text-muted mb-0">Track all your network commission earnings</p>
                 </div>
                 <a href="{{ route('mlm.index') }}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left"></i> Back to MLM Dashboard
+                    <i class="fas fa-arrow-left"></i> Back to Network Dashboard
                 </a>
             </div>
         </div>

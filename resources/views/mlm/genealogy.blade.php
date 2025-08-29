@@ -242,7 +242,7 @@
                         <i class="fas fa-sitemap text-primary me-2"></i>
                         Genealogy Tree - Mindmap View
                     </h1>
-                    <p class="text-muted mb-0">Your 5-level MLM network visualization</p>
+                    <p class="text-muted mb-0">Your 5-level network visualization</p>
                 </div>
                 <div>
                     <a href="{{ route('mlm.team') }}" class="btn btn-outline-primary me-2">
@@ -251,7 +251,7 @@
                     </a>
                     <a href="{{ route('mlm.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i>
-                        Back
+                        Back to Dashboard
                     </a>
                 </div>
             </div>

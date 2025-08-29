@@ -9,9 +9,9 @@
                 <div>
                     <h1 class="mb-2 fw-bold text-gradient">
                         <i class="fas fa-users-cog text-primary"></i>
-                        MLM Dashboard
+                        Network Dashboard
                     </h1>
-                    <p class="text-muted mb-0">Manage your MLM business and track your earnings</p>
+                    <p class="text-muted mb-0">Manage your network business and track your earnings</p>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
                     <a href="{{ route('mlm.referral-link') }}" class="btn btn-success">
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <!-- MLM Stats Cards -->
+    <!-- Network Stats Cards -->
     <div class="row g-3 mb-4">
         <div class="col-lg-3 col-md-6">
             <div class="card bg-gradient-success text-white h-100">
@@ -274,7 +274,7 @@
                 <div class="card-header bg-white border-0">
                     <h5 class="mb-0 fw-semibold">
                         <i class="fas fa-bolt text-primary"></i>
-                        MLM Quick Actions
+                        Network Quick Actions
                     </h5>
                 </div>
                 <div class="card-body">

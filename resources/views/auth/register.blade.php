@@ -7,9 +7,9 @@
             <div class="card">
                 <div class="card-header text-center">
                     <div class="mb-3">
-                        <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="MLM Investment" style="height: 48px; width: auto;">
+                        <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="Network Investment" style="height: 48px; width: auto;">
                     </div>
-                    {{ __('Register') }} - Join MLM Investment System
+                    {{ __('Register') }} - Join Network Investment System
                 </div>
 
                 <div class="card-body">
@@ -109,7 +109,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-user-plus"></i> {{ __('Register & Join MLM') }}
+                                    <i class="fas fa-user-plus"></i> {{ __('Register & Join Network') }}
                                 </button>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
 
                     <div class="mt-4 text-center">
                         <small class="text-muted">
-                            By registering, you agree to join our MLM investment system where you can earn through direct referrals and team building.
+                            By registering, you agree to join our network investment system where you can earn through direct referrals and team building.
                         </small>
                     </div>
                 </div>

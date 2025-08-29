@@ -138,12 +138,12 @@
                 </div>
             </div>
 
-            <!-- MLM Network Overview -->
+            <!-- Network Overview -->
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-0">
                     <h5 class="mb-0 fw-semibold">
                         <i class="fas fa-sitemap text-warning"></i>
-                        MLM Network Overview
+                        Network Overview
                     </h5>
                 </div>
                 <div class="card-body">

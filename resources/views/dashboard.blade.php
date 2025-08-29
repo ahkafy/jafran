@@ -60,7 +60,7 @@
                             <h3 class="mb-0 fw-bold">${{ number_format($stats['commission_balance'], 2) }}</h3>
                             <small class="text-success">
                                 <i class="fas fa-chart-line"></i>
-                                MLM earnings
+                                Network earnings
                             </small>
                         </div>
                         <div class="text-end">
@@ -104,7 +104,7 @@
                             <h3 class="mb-0 fw-bold">{{ $stats['total_team'] }}</h3>
                             <small class="text-warning">
                                 <i class="fas fa-users"></i>
-                                MLM network
+                                Team network
                             </small>
                         </div>
                         <div class="text-end">

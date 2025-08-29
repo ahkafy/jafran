@@ -10,14 +10,14 @@
                         <i class="fas fa-users-cog text-primary"></i>
                         Team Overview
                     </h2>
-                    <p class="text-muted mb-0">Monitor your entire MLM network performance</p>
+                    <p class="text-muted mb-0">Monitor your entire network performance</p>
                 </div>
                 <div class="d-flex gap-2">
                     <a href="{{ route('mlm.genealogy') }}" class="btn btn-info">
                         <i class="fas fa-sitemap"></i> Genealogy Tree
                     </a>
                     <a href="{{ route('mlm.index') }}" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left"></i> Back
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
                     </a>
                 </div>
             </div>

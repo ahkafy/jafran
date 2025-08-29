@@ -17,7 +17,7 @@
                         </div>
                         <a href="{{ route('mlm.index') }}" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left"></i>
-                            <span class="d-none d-sm-inline">Back to MLM Dashboard</span>
+                            <span class="d-none d-sm-inline">Back to Network Dashboard</span>
                             <span class="d-sm-none">Back</span>
                         </a>
                     </div>
@@ -39,7 +39,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-info-circle me-2"></i>
                                     <div class="flex-grow-1">
-                                        <strong>How it works:</strong> When someone registers using your link and makes investments, you'll earn commissions based on our MLM structure!
+                                        <strong>How it works:</strong> When someone registers using your link and makes investments, you'll earn commissions based on our network structure!
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
 
                             <div class="row g-3">
                                 <div class="col-lg-4 col-md-6">
-                                    <a href="https://wa.me/?text=Join%20our%20MLM%20Investment%20System%20and%20earn%20daily%20returns!%20{{ urlencode($referralLink) }}" target="_blank" class="btn btn-success w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4">
+                                    <a href="https://wa.me/?text=Join%20our%20Investment%20Network%20System%20and%20earn%20daily%20returns!%20{{ urlencode($referralLink) }}" target="_blank" class="btn btn-success w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4">
                                         <i class="fab fa-whatsapp fa-2x mb-2"></i>
                                         <strong>WhatsApp</strong>
                                         <small class="opacity-75">Share via WhatsApp</small>
@@ -201,7 +201,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-4 col-md-6">
-                                    <a href="https://twitter.com/intent/tweet?text=Join%20our%20MLM%20Investment%20System%20and%20earn%20daily%20returns!&url={{ urlencode($referralLink) }}" target="_blank" class="btn btn-info w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4">
+                                    <a href="https://twitter.com/intent/tweet?text=Join%20our%20Investment%20Network%20System%20and%20earn%20daily%20returns!&url={{ urlencode($referralLink) }}" target="_blank" class="btn btn-info w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4">
                                         <i class="fab fa-twitter fa-2x mb-2"></i>
                                         <strong>Twitter</strong>
                                         <small class="opacity-75">Share on Twitter</small>
@@ -241,7 +241,7 @@
                         <div class="card-header bg-primary text-white">
                             <h5 class="mb-0 fw-semibold">
                                 <i class="fas fa-gift"></i>
-                                MLM Investment Benefits
+                                Network Investment Benefits
                             </h5>
                         </div>
                         <div class="card-body">
@@ -273,7 +273,7 @@
                                 <div class="col-md-6">
                                     <h6 class="fw-semibold text-primary mb-3">
                                         <i class="fas fa-users"></i>
-                                        MLM Benefits:
+                                        Network Benefits:
                                     </h6>
                                     <ul class="list-unstyled">
                                         <li class="mb-2">
@@ -368,14 +368,14 @@ function copyToClipboard() {
 }
 
 function shareViaEmail() {
-    const subject = encodeURIComponent('Join our MLM Investment System');
-    const body = encodeURIComponent(`Hi!\n\nI'd like to invite you to join our MLM Investment System where you can earn 1% daily returns for 200 days.\n\nJoin using my referral link: {{ $referralLink }}\n\nBenefits:\n- 1% daily returns for 200 days\n- Minimum investment: $5\n- Maximum investment: $100 per package\n- Build your own team and earn commissions\n\nGet started today!`);
+    const subject = encodeURIComponent('Join our Investment Network System');
+    const body = encodeURIComponent(`Hi!\n\nI'd like to invite you to join our Investment Network System where you can earn 1% daily returns for 200 days.\n\nJoin using my referral link: {{ $referralLink }}\n\nBenefits:\n- 1% daily returns for 200 days\n- Minimum investment: $5\n- Maximum investment: $100 per package\n- Build your own team and earn commissions\n\nGet started today!`);
 
     window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
 }
 
 function shareViaSMS() {
-    const message = encodeURIComponent(`Join our MLM Investment System and earn 1% daily returns! Use my referral link: {{ $referralLink }}`);
+    const message = encodeURIComponent(`Join our Investment Network System and earn 1% daily returns! Use my referral link: {{ $referralLink }}`);
     window.open(`sms:?body=${message}`, '_blank');
 }
 </script>

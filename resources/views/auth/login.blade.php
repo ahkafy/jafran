@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header text-center">
                     <div class="mb-3">
-                        <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="MLM Investment" style="height: 48px; width: auto;">
+                        <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="Network Investment" style="height: 48px; width: auto;">
                     </div>
                     {{ __('Login') }}
                 </div>
