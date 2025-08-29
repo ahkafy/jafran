@@ -109,7 +109,7 @@
                             $levelInvestments = $stats['team_investments'][$level] ?? 0;
                             $commissionRate = [1 => 10, 2 => 4, 3 => 3, 4 => 2, 5 => 2][$level];
                         @endphp
-                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="col-lg-{{ $level <= 4 ? '3' : '12' }} col-md-6 mb-4">
                             <div class="card border-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }} h-100">
                                 <div class="card-header bg-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }} text-white text-center">
                                     <h6 class="mb-0">Level {{ $level }}</h6>
@@ -117,25 +117,26 @@
                                 </div>
                                 <div class="card-body text-center">
                                     <div class="mb-3">
-                                                                                <i class="fas fa-users fa-2x text-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }}"></i>
+                                            <i class="fas fa-users fa-2x text-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }}"></i>
                                     </div>
                                     <div class="mb-3">
                                         <h4 class="text-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }}">{{ $levelMembers->count() }}</h4>
-                                    <p class="text-muted mb-2">Members</p>
+                                        <p class="text-muted mb-2">Members</p>
 
-                                    <hr>
+                                        <hr>
 
-                                    <h5 class="text-primary">${{ number_format($levelInvestments, 2) }}</h5>
-                                    <p class="text-muted mb-2">Total Investments</p>
+                                        <h5 class="text-primary">${{ number_format($levelInvestments, 2) }}</h5>
+                                        <p class="text-muted mb-2">Total Investments</p>
 
-                                    <hr>
+                                        <hr>
 
-                                    <h6 class="text-success">${{ number_format($levelInvestments * ($commissionRate / 100), 2) }}</h6>
-                                    <p class="text-muted mb-0">Your Commission</p>
+                                        <h6 class="text-success">${{ number_format($levelInvestments * ($commissionRate / 100), 2) }}</h6>
+                                        <p class="text-muted mb-0">Your Commission</p>
+                                    </div>
                                 </div>
                                 @if($levelMembers->count() > 0)
                                 <div class="card-footer bg-light">
-                                    <button class="btn btn-sm btn-outline-{{ ['', 'success', 'info', 'warning', 'danger'][$level] }} w-100" onclick="showLevelMembers({{ $level }})">
+                                    <button class="btn btn-sm btn-outline-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }} w-100" onclick="showLevelMembers({{ $level }})">
                                         <i class="fas fa-eye"></i> View Members
                                     </button>
                                 </div>
@@ -158,7 +159,7 @@
     <div class="row mb-4" id="level-{{ $level }}-members" style="display: none;">
         <div class="col-12">
             <div class="card shadow-sm">
-                <div class="card-header bg-{{ ['', 'success', 'info', 'warning', 'danger'][$level] }} text-white d-flex justify-content-between align-items-center">
+                <div class="card-header bg-{{ ['', 'success', 'info', 'warning', 'danger', 'dark'][$level] }} text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
                         <i class="fas fa-users"></i>
                         Level {{ $level }} Team Members
@@ -365,7 +366,7 @@
 <script>
 function showLevelMembers(level) {
     // Hide all other level member sections
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 5; i++) {
         if (i !== level) {
             const element = document.getElementById(`level-${i}-members`);
             if (element) {

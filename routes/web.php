@@ -56,14 +56,69 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/details/{investment}', [InvestmentController::class, 'investmentDetails'])->name('details');
     });
 
-    // MLM routes
-    Route::prefix('mlm')->name('mlm.')->group(function () {
-        Route::get('/', [MLMController::class, 'index'])->name('index');
+    // Network routes (renamed from MLM)
+    Route::prefix('network')->name('network.')->group(function () {
+        Route::get('/', [MLMController::class, 'genealogyGraph'])->name('index'); // Default to genealogy-graph
+        Route::get('/genealogy-graph', [MLMController::class, 'genealogyGraph'])->name('genealogy.graph');
+        Route::get('/genealogy-data', [MLMController::class, 'genealogyData'])->name('genealogy.data');
         Route::get('/genealogy', [MLMController::class, 'genealogy'])->name('genealogy');
         Route::get('/referrals', [MLMController::class, 'referrals'])->name('referrals');
         Route::get('/commissions', [MLMController::class, 'commissions'])->name('commissions');
         Route::get('/team', [MLMController::class, 'team'])->name('team');
         Route::get('/referral-link', [MLMController::class, 'referralLink'])->name('referral-link');
+    });
+
+    // Keep MLM routes for backward compatibility
+    Route::prefix('mlm')->name('mlm.')->group(function () {
+        Route::get('/', [MLMController::class, 'genealogyGraph'])->name('index'); // Default to genealogy-graph
+        Route::get('/genealogy-graph', [MLMController::class, 'genealogyGraph'])->name('genealogy.graph');
+        Route::get('/genealogy-data', [MLMController::class, 'genealogyData'])->name('genealogy.data');
+        Route::get('/genealogy', [MLMController::class, 'genealogy'])->name('genealogy');
+        Route::get('/referrals', [MLMController::class, 'referrals'])->name('referrals');
+        Route::get('/commissions', [MLMController::class, 'commissions'])->name('commissions');
+        Route::get('/team', [MLMController::class, 'team'])->name('team');
+        Route::get('/referral-link', [MLMController::class, 'referralLink'])->name('referral-link');
+    });
+
+    // Test route for debugging
+    Route::get('/test-mlm', function () {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'Not authenticated']);
+            }
+
+            // Test genealogy data loading
+            $tree = $user->referrals()->with([
+                'referrals.referrals.referrals.referrals'
+            ])->get();
+
+            return response()->json([
+                'success' => true,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'rank' => $user->rank,
+                    'total_investment' => $user->total_investment
+                ],
+                'direct_referrals' => $tree->count(),
+                'sample_referral' => $tree->first() ? [
+                    'name' => $tree->first()->name,
+                    'rank' => $tree->first()->rank,
+                    'sub_referrals' => $tree->first()->referrals->count()
+                ] : null
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
+    });
+
+    // Debug genealogy data endpoint
+    Route::get('/debug-genealogy', function () {
+        return view('debug-genealogy');
     });
 });
 

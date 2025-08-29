@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - Modern MLM Investment System</title>
+    <title>{{ config('app.name', 'Laravel') }} - Modern Network Investment System</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -19,11 +19,13 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    @yield('styles')
+
     <!-- Additional PWA Meta Tags -->
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="MLM Investment">
+    <meta name="apple-mobile-web-app-title" content="Network Investment">
 </head>
 <body>
     <div id="app">
@@ -32,7 +34,7 @@
             <div class="container">
                 <!-- Brand -->
                 <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}">
-                    <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="MLM Investment" class="me-2" style="height: 60px; width: auto;">
+                    <img src="https://i.postimg.cc/xj3zjCcD/logo.png" alt="Network Investment" class="me-2" style="height: 60px; width: auto;">
 
 
                 </a>
@@ -72,33 +74,33 @@
                             </ul>
                         </li>
 
-                        <!-- MLM Dropdown -->
+                        <!-- Network Dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {{ request()->routeIs('mlm.*') ? 'active' : '' }}" href="#" id="mlmDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle {{ request()->routeIs('network.*') || request()->routeIs('mlm.*') ? 'active' : '' }}" href="#" id="networkDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-users"></i>
-                                MLM
+                                Network
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="mlmDropdown">
-                                <li><a class="dropdown-item" href="{{ route('mlm.index') }}">
-                                    <i class="fas fa-tachometer-alt"></i> MLM Dashboard
+                            <ul class="dropdown-menu" aria-labelledby="networkDropdown">
+                                <li><a class="dropdown-item" href="{{ route('network.index') }}">
+                                    <i class="fas fa-sitemap"></i> Team Network Tree
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ route('mlm.genealogy') }}">
-                                    <i class="fas fa-sitemap"></i> Genealogy Tree
+                                <li><a class="dropdown-item" href="{{ route('network.genealogy') }}">
+                                    <i class="fas fa-list"></i> Network List
                                 </a></li>
-                                <li><a class="dropdown-item" href="{{ route('mlm.referrals') }}">
+                                <li><a class="dropdown-item" href="{{ route('network.referrals') }}">
                                     <i class="fas fa-user-friends"></i> Direct Referrals
                                 </a></li>
-                                <li><a class="dropdown-item" href="{{ route('mlm.team') }}">
+                                <li><a class="dropdown-item" href="{{ route('network.team') }}">
                                     <i class="fas fa-users-cog"></i> Team Overview
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ route('mlm.commissions') }}">
+                                <li><a class="dropdown-item" href="{{ route('network.commissions') }}">
                                     <i class="fas fa-hand-holding-usd"></i> Commission History
                                 </a></li>
-                                <li><a class="dropdown-item" href="{{ route('mlm.referral-link') }}">
-                                    <i class="fas fa-share-alt"></i> Referral Link
-                                </a></li>
+                                <li>                    <a href="{{ route('network.referral-link') }}" class="dropdown-item">
+                        <i class="fas fa-share-alt"></i> Referral Link
+                    </a></li>
                             </ul>
                         </li>
 
@@ -290,9 +292,9 @@
                         <i class="fas fa-chart-line d-block"></i>
                         <small>Invest</small>
                     </a>
-                    <a href="{{ route('mlm.index') }}" class="nav-link text-center {{ request()->routeIs('mlm.*') ? 'text-primary' : 'text-muted' }}">
+                    <a href="{{ route('network.referral-link') }}" class="nav-link text-center {{ request()->routeIs('network.*') || request()->routeIs('mlm.*') ? 'text-primary' : 'text-muted' }}">
                         <i class="fas fa-users d-block"></i>
-                        <small>MLM</small>
+                        <small>Network</small>
                     </a>
                     <a href="{{ route('wallet.index') }}" class="nav-link text-center {{ request()->routeIs('wallet*') ? 'text-primary' : 'text-muted' }}">
                         <i class="fas fa-wallet d-block"></i>
@@ -491,5 +493,7 @@
             }
         });
     </script>
+
+    @yield('scripts')
 </body>
 </html>

@@ -45,18 +45,28 @@ class MLMController extends Controller
         // Update current user's rank
         $user->updateRank();
 
-        // Get direct referrals with their referrals loaded
-        $tree = $user->referrals()->with('referrals')->get();
+        // Get all 5 levels of referrals
+        $tree = $user->referrals()->with([
+            'referrals.referrals.referrals.referrals' // Load 5 levels deep
+        ])->get();
 
-        // Update ranks for all users in the tree
-        foreach ($tree as $level1User) {
-            $level1User->updateRank();
-            foreach ($level1User->referrals as $level2User) {
-                $level2User->updateRank();
-            }
-        }
+        // Update ranks for all users in the tree recursively
+        $this->updateTreeRanks($tree);
 
         return view('mlm.genealogy', compact('tree'));
+    }
+
+    /**
+     * Recursively update ranks for all users in the tree
+     */
+    private function updateTreeRanks($users)
+    {
+        foreach ($users as $user) {
+            $user->updateRank();
+            if ($user->referrals->count() > 0) {
+                $this->updateTreeRanks($user->referrals);
+            }
+        }
     }
 
     /**
@@ -96,9 +106,9 @@ class MLMController extends Controller
         $user = Auth::user();
         $stats = $this->mlmService->getUserMLMStats($user);
 
-        // Get team members by levels
+        // Get team members by levels (all 5 levels)
         $teamLevels = [];
-        for ($level = 1; $level <= 4; $level++) {
+        for ($level = 1; $level <= 5; $level++) {
             $teamLevels[$level] = $this->getTeamMembersByLevel($user, $level);
         }
 
@@ -135,5 +145,69 @@ class MLMController extends Controller
         $referralLink = route('register') . '?ref=' . $user->referral_code;
 
         return view('mlm.referral-link', compact('referralLink'));
+    }
+
+    /**
+     * Show interactive genealogy graph view
+     */
+    public function genealogyGraph()
+    {
+        return view('mlm.genealogy-graph');
+    }
+
+    /**
+     * Return genealogy JSON data (supports lazy loading)
+     */
+    public function genealogyData(Request $request)
+    {
+        $user = Auth::user();
+
+        // If parent param is provided, return its direct children
+        if ($request->has('parent')) {
+            $parentId = (int) $request->get('parent');
+            $parent = User::with('referrals')->find($parentId);
+            if (!$parent) {
+                return response()->json(['error' => 'Parent not found'], 404);
+            }
+
+            $children = $parent->referrals->map(function ($c) {
+                return [
+                    'id' => $c->id,
+                    'label' => $c->name,
+                    'rank' => $c->rank ?? 'Guest',
+                    'investment' => $c->total_investment ?? 0,
+                    'referrals_count' => $c->referrals->count()
+                ];
+            });
+
+            return response()->json(['nodes' => $children]);
+        }
+
+        // Otherwise return nested tree up to depth (default 2)
+        $depth = (int) $request->get('depth', 2);
+
+        $build = function ($u, $current = 0) use (&$build, $depth) {
+            $node = [
+                'id' => $u->id,
+                'label' => $u->name,
+                'rank' => $u->rank ?? 'Guest',
+                'investment' => $u->total_investment ?? 0,
+                'referrals_count' => $u->referrals->count(),
+                'children' => []
+            ];
+
+            if ($current < $depth) {
+                $u->load('referrals');
+                foreach ($u->referrals as $r) {
+                    $node['children'][] = $build($r, $current + 1);
+                }
+            }
+
+            return $node;
+        };
+
+        $root = $build($user, 0);
+
+        return response()->json($root);
     }
 }
