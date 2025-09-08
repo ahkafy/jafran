@@ -167,6 +167,7 @@
     </div>
 
     <!-- Quick Actions -->
+    <div class="container">
     <div class="row g-3 mb-4">
         <div class="col-lg-3 col-md-6">
             <a href="{{ route('wallet.add-funds') }}" class="card border-0 shadow-sm text-decoration-none">
@@ -347,6 +348,7 @@
             @endif
         </div>
     </div>
+</div>
 </div>
 
 <style>
