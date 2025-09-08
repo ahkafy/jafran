@@ -1,7 +1,4 @@
-@extends(                    <h1 class="mb-2 fw-bold">
-                        <i class="fas fa-history text-primary"></i>
-                        Transaction History
-                    </h1>outs.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container-fluid">
@@ -302,11 +299,15 @@ function exportTransactions(format) {
 
 // Auto-refresh for pending transactions
 @if($transactions->where('status', 'pending')->count() > 0)
-setTimeout(function() {
-    if (document.querySelector('.badge:contains("Pending")')) {
-        location.reload();
-    }
-}, 30000); // Refresh every 30 seconds if there are pending transactions
+    setTimeout(function() {
+        var badges = Array.from(document.querySelectorAll('.badge'));
+        var hasPending = badges.some(function(el) {
+            return el.textContent && el.textContent.trim().toLowerCase().indexOf('pending') !== -1;
+        });
+        if (hasPending) {
+            location.reload();
+        }
+    }, 30000); // Refresh every 30 seconds if there are pending transactions
 @endif
 </script>
 
