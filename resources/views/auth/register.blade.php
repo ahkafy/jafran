@@ -13,13 +13,21 @@
                 </div>
 
                 <div class="card-body">
+                    @if($errors->has('csrf'))
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>Session Expired:</strong> {{ $errors->first('csrf') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
                     @if($sponsor)
                         <div class="alert alert-info">
                             <i class="fas fa-user-plus"></i> You were referred by <strong>{{ $sponsor->name }}</strong>
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" id="registerForm">
                         @csrf
 
                         @if($referralCode)
@@ -125,4 +133,77 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const registerForm = document.getElementById('registerForm');
+    const submitButton = registerForm.querySelector('button[type="submit"]');
+    let isSubmitting = false;
+
+    // Function to refresh CSRF token
+    async function refreshCSRFToken() {
+        try {
+            const response = await fetch('/csrf-token', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const csrfInput = registerForm.querySelector('input[name="_token"]');
+                if (csrfInput && data.csrf_token) {
+                    csrfInput.value = data.csrf_token;
+                    // Update meta tag as well
+                    const metaTag = document.querySelector('meta[name="csrf-token"]');
+                    if (metaTag) {
+                        metaTag.setAttribute('content', data.csrf_token);
+                    }
+                }
+            }
+        } catch (error) {
+            console.warn('Failed to refresh CSRF token:', error);
+        }
+    }
+
+    // Refresh CSRF token every 10 minutes
+    setInterval(refreshCSRFToken, 10 * 60 * 1000);
+
+    // Handle form submission
+    registerForm.addEventListener('submit', async function(e) {
+        if (isSubmitting) {
+            e.preventDefault();
+            return;
+        }
+
+        isSubmitting = true;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+        // Refresh CSRF token before submitting
+        await refreshCSRFToken();
+
+        // Allow form to submit
+        setTimeout(() => {
+            if (isSubmitting) {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-user-plus"></i> {{ __("Register & Join Network") }}';
+                isSubmitting = false;
+            }
+        }, 10000);
+    });
+
+    // Handle 419 errors specifically
+    window.addEventListener('beforeunload', function() {
+        isSubmitting = false;
+    });
+
+    // Check if we're back from a failed submission
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('csrf_error')) {
+        refreshCSRFToken();
+    }
+});
+</script>
 @endsection

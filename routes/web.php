@@ -10,6 +10,11 @@ use App\Http\Controllers\AccessController;
 // Access blocked route (no middleware)
 Route::get('/access-blocked', [AccessController::class, 'blocked'])->name('access.blocked');
 
+// CSRF token refresh route (available to all)
+Route::get('/csrf-token', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+})->name('csrf.token');
+
 // Apply geolocation middleware to all routes except access blocked
 Route::middleware(['geolocation'])->group(function () {
 Route::get('/', function () {

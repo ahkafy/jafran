@@ -492,6 +492,61 @@
                 bsCollapse.hide();
             }
         });
+
+        // Global CSRF token refresh for all forms
+        function setupGlobalCSRFProtection() {
+            // Refresh CSRF token every 15 minutes for active users
+            setInterval(async function() {
+                try {
+                    const response = await fetch('/csrf-token', {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        // Update all CSRF tokens in forms
+                        document.querySelectorAll('input[name="_token"]').forEach(function(input) {
+                            input.value = data.csrf_token;
+                        });
+
+                        // Update meta tag
+                        const metaTag = document.querySelector('meta[name="csrf-token"]');
+                        if (metaTag) {
+                            metaTag.setAttribute('content', data.csrf_token);
+                        }
+
+                        console.log('CSRF token refreshed successfully');
+                    }
+                } catch (error) {
+                    console.warn('Failed to refresh CSRF token:', error);
+                }
+            }, 15 * 60 * 1000); // 15 minutes
+
+            // Handle form submissions to refresh token before submitting
+            document.addEventListener('submit', async function(e) {
+                const form = e.target;
+                const csrfInput = form.querySelector('input[name="_token"]');
+
+                if (csrfInput) {
+                    try {
+                        const response = await fetch('/csrf-token');
+                        if (response.ok) {
+                            const data = await response.json();
+                            csrfInput.value = data.csrf_token;
+                        }
+                    } catch (error) {
+                        console.warn('Failed to refresh CSRF token before form submission:', error);
+                    }
+                }
+            });
+        }
+
+        // Initialize CSRF protection
+        setupGlobalCSRFProtection();
     </script>
 
     @yield('scripts')
